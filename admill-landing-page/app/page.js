@@ -1,23 +1,8 @@
 import React from "react";
-import Head from "next/head";
 
 export default function HomePage() {
   return (
     <>
-      <Head>
-        <title>Admill Systems | Global Electronic Security Solutions</title>
-        <meta name="description" content="Admill Systems provides world-class CCTV, smart access, alarm, and IT security solutions that blend design and technology for a safer, smarter future." />
-        <meta name="keywords" content="Security Systems, CCTV, Access Control, Alarm Systems, IT Infrastructure, Global Surveillance" />
-        <meta name="author" content="Admill Systems" />
-        <meta name="robots" content="index, follow" />
-        <meta property="og:title" content="Admill Systems | Secure by Design" />
-        <meta property="og:description" content="We deliver premium, design-led electronic security and IT services for forward-thinking businesses and institutions." />
-        <meta property="og:image" content="/hero-security.jpg" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.admill.co.zw" />
-      </Head>
-
-      <div className="bg-black text-white font-sans tracking-wide">
         {/* Slim Navigation */}
         <nav className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-8 py-4 backdrop-blur-sm bg-black/60 border-b border-white/10">
           <div className="text-lg font-semibold text-white">Admill</div>
@@ -122,7 +107,7 @@ export default function HomePage() {
         <footer className="bg-black text-gray-500 text-sm text-center py-6">
           &copy; {new Date().getFullYear()} Admill Systems · Designed for a secure world · Harare, Zimbabwe
         </footer>
-      </div>
+      
     </>
   );
 }

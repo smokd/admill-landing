@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: 'Admill Systems | Global Electronic Security Solutions',
   description: 'Admill Systems provides world-class CCTV, smart access, alarm, and IT security solutions that blend design and technology for a safer, smarter future.',
   keywords: "Security Systems, CCTV, Access Control, Alarm Systems, IT Infrastructure, Global Surveillance",
-  authors: "Admill Systems",
+  authors: [{ name: "Admill Systems" }],
   robots: "index, follow",
   openGraph: {
     title: "Admill Systems | Secure by Design",
