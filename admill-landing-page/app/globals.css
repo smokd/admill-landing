@@ -62,3 +62,13 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Other utility styles or components */
 /* You can create custom utility classes if you need specific combinations */
+
+/* Any base link styles */
+a {
+  color: var(--color-admill-red); /* Your accent color for links */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+a:hover {
+  color: var(--color-admill-light);
+}

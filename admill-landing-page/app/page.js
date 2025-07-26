@@ -17,7 +17,7 @@ export default function HomePage() {
         {/* Hero Section */}
         <section
           className="h-screen w-full bg-cover bg-center flex items-center justify-center text-center px-6"
-          style={{ backgroundImage: "url('/hero-security.jpg')" }}
+          style={{ backgroundImage: "url('/security-hero.mp4')" }}
         >
           <div className="bg-black/60 p-10 rounded-xl max-w-2xl">
             <h1 className="text-4xl sm:text-6xl font-bold leading-tight mb-6">Secure by Design</h1>
