@@ -7,10 +7,12 @@
 
 @theme {
   /* Custom Colors (overwrite/add to default palette) */
-  --color-admill-dark: #1A1A1A;
-  --color-admill-light: #F8F8F8;
-  --color-admill-red: #A32B2B; /* A more sophisticated red */
-  --color-admill-grey: #444444; /* For borders, subtle elements */
+  --color-primary-bg: #FFFFFF;     /* Main background, like Transpaco */
+  --color-secondary-bg: #F8F8F8;   /* For alternating sections (subtle light gray) */
+  --color-primary-text: #1A1A1A;   /* Main text color (very dark gray) */
+  --color-accent-red: #CC0000;     /* NEW: Your unique accent red */
+  --color-muted-text: #6B7280;     /* For muted text (medium gray) */
+  --color-border-light: #E0E0E0;   /* For light borders */
 
   /* Custom Fonts */
   --font-family-heading: "Inter", sans-serif; /* Clean, modern sans-serif */
@@ -42,9 +44,9 @@ body {
 
 /* Base styles using your new theme colors/fonts */
 html, body {
-  height: 100%;
-  background-color: var(--color-admill-dark); /* Apply your new dark background */
-  color: var(--color-admill-light);          /* Apply your new light text color */
+   height: 100%;
+  background-color: var(--color-primary-bg);
+  color: var(--color-primary-text);
   font-family: var(--font-family-body);
 }
 
@@ -64,11 +66,12 @@ h1, h2, h3, h4, h5, h6 {
 /* You can create custom utility classes if you need specific combinations */
 
 /* Any base link styles */
-a {
-  color: var(--color-admill-red); /* Your accent color for links */
+
+/*a {
+  color: var(--color-admill-red); /* Your accent color for links
   text-decoration: none;
   transition: color 0.3s ease;
 }
 a:hover {
   color: var(--color-admill-light);
-}
+} */
