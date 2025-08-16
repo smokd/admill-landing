@@ -413,7 +413,7 @@ export default function HomePage() {
               <p><strong>Office Hours:</strong> Mon-Fri, 9 AM - 5 PM CAT</p>
               {/* For the map, you would typically embed a Google Maps iframe or use a React map library. */}
               {/* Example: <iframe src="YOUR_Maps_EMBED_URL" width="100%" height="250" style="border:0;" allowFullScreen="" loading="lazy"></iframe> */}
-              <div className="w-full h-48 bg-muted-text/10 rounded-lg flex items-center justify-center text-muted-text mt-6">Map Placeholder</div>
+              <div className="w-full h-48 bg-muted-text/10 rounded-lg flex items-center justify-center text-muted-text mt-6">ADMILL</div>
             </div>
           </motion.div>
 
@@ -467,8 +467,8 @@ export default function HomePage() {
             <h4 className="font-semibold text-primary-text mb-4 font-heading">Contact</h4>
             <ul className="space-y-2 text-sm font-body">
               <li><a href="mailto:info@admill.co.zw" className="hover:text-accent-red transition-colors duration-300">info@admill.co.zw</a></li>
-              <li><a href="tel:+263784319436" className="hover:text-accent-red transition-colors duration-300">+263 784 319 436</a></li>
-              <li>[Your Physical Address Here]</li>
+              <li><a href="tel:+263784319436" className="hover:text-accent-red transition-colors duration-300">+263 715 017 744</a></li>
+              <li>Hogerty Hill</li>
               <li>Harare, Zimbabwe</li>
             </ul>
           </div>

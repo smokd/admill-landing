@@ -1,6 +1,7 @@
-// app/layout.js
+// app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script"; // Import the Script component
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Admill Systems | Electronic  Engineering',
-  description: 'Admill Systems provides world-class CCTV, smart access, alarm, and IT security solutions that blend design and technology for a safer, smarter future.',
-  keywords: "Security Systems, CCTV, Access Control, Alarm Systems, IT Infrastructure, Global Surveillance",
+  title: 'Admill Systems | Electronic Engineering',
+  description: 'Admill Systems provides world-class CCTV, smart access control, alarm and intrusion,IT security solutions that blend design and technology for a safer, smarter future.',
+  keywords: "Security Systems, CCTV, Access Control, Alarm Systems,ESP32, Automation, biometric, facial recognition, python, IT Infrastructure, Global Surveillance, Networking, Wireless, Mikrotik, Ubiquiti",
   authors: [{ name: "Admill Systems" }],
   robots: "index, follow", // This is correctly set to allow indexing
   openGraph: {
@@ -46,6 +47,46 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      {/* Google Analytics & Google Ads gtag.js scripts using next/script */}
+      {/* Replace G-XXXXXXXXXX with your actual GA4 Measurement ID */}
+      {/* Replace AW-YYYYYYYYY with your Google Ads Conversion ID */}
+      <Script
+        async
+        src={`https://www.googletagmanager.com/gtag/js?id=G-ZMM69FEM9Z`} // Use your actual GA4 ID here
+        strategy="afterInteractive"
+      />
+      {/* Corrected: Place the script content directly as a child of Script */}
+      <Script
+        id="gtag-init" // Add an ID for better debugging/identification
+        strategy="afterInteractive"
+      >
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-ZMM69FEM9Z'); // Use your actual GA4 ID here
+          // Only add the Google Ads config if you are using Google Ads tracking
+          gtag('config', 'AW-YYYYYYYYY'); // Use your actual Google Ads ID here
+        `}
+      </Script>
+
+      {/* Matomo Analytics */}
+        <Script id="Fg7DkXUJ" strategy="afterInteractive">
+          {`
+            var _paq = window._paq = window._paq || [];
+            _paq.push(['trackPageView']);
+            _paq.push(['enableLinkTracking']);
+            (function() {
+              var u="https://admill.co.zw/analytics";
+              _paq.push(['setTrackerUrl', u+'matomo.php']);
+              _paq.push(['setSiteId', '1']);
+              var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+              g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+            })();
+          `}
+        </Script>
+
       <body className={`${geistSans.variable} ${geistMono.variable} bg-black text-white font-sans tracking-wide`}>
         {children}
       </body>
