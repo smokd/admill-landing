@@ -3,10 +3,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  output: 'export', // CRITICAL for static site generation
+  // Removed 'output: export' to enable API routes and server-side features
   images: {
-    unoptimized: true, // Recommended for static export if using Next.js Image component
-    // CORRECT PLACEMENT: remotePatterns is a property of the images object
+    unoptimized: true, // Can be set to false if you want Next.js image optimization
     remotePatterns: [
       {
         protocol: 'https',

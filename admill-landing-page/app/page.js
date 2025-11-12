@@ -124,7 +124,7 @@ export default function HomePage() {
           <div className="flex items-center">
             <NextImage
               src="/logo-02.png"
-              alt="Admill Systems Logo"
+              alt="Admill Systems - Electronic Security & IT Solutions Provider in Zimbabwe"
               width={45}
               height={40}
               priority
@@ -277,7 +277,7 @@ export default function HomePage() {
               // NEW IMAGE URL
               src="/eng.jpg
               "
-              alt="Modern Security Technology"
+              alt="Professional security engineer installing advanced CCTV surveillance system"
               fill // Use fill to make image cover container
               style={{ objectFit: 'cover' }} // object-fit: cover
               sizes="(max-width: 768px) 100vw, 50vw" // Responsive image sizing
@@ -393,7 +393,7 @@ export default function HomePage() {
                 <NextImage
                   // NEW IMAGE URL
                   src="turn.png"
-                  alt="Large Commercial Complex Security"
+                  alt="Large commercial complex with integrated CCTV surveillance and access control systems by Admill Systems"
                   fill
                   style={{ objectFit: 'cover' }}
                   sizes="(max-width: 768px) 100vw, 33vw"
@@ -413,7 +413,7 @@ export default function HomePage() {
                 <NextImage
                   // NEW IMAGE URL
                   src="board.webp"
-                  alt="Government Ministry Building"
+                  alt="Government ministry building secured with biometric access control and alarm systems installed by Admill"
                   fill
                   style={{ objectFit: 'cover' }}
                   sizes="(max-width: 768px) 100vw, 33vw"
@@ -433,7 +433,7 @@ export default function HomePage() {
                 <NextImage
                   // NEW IMAGE URL
                   src="mtgs.jpg"
-                  alt="Educational Campus Network"
+                  alt="Educational campus with comprehensive network infrastructure and structured cabling by Admill Systems"
                   fill
                   style={{ objectFit: 'cover' }}
                   sizes="(max-width: 768px) 100vw, 33vw"
@@ -721,7 +721,7 @@ export default function HomePage() {
           <div className="flex flex-col items-start">
             <NextImage
               src="/logo-02.png"
-              alt="Admill Systems Logo"
+              alt="Admill Systems - Trusted Security Solutions Provider in Zimbabwe"
               width={60}
               height={50}
               className="mb-4"
