@@ -22,6 +22,50 @@ const containerVariants = {
   },
 };
 
+// FAQ Item Component
+function FAQItem({ question, answer, index }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <motion.div
+      className="border border-border-light rounded-lg overflow-hidden bg-secondary-bg"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.4, delay: index * 0.1 }}
+    >
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-primary-bg transition-colors duration-200"
+      >
+        <span className="font-semibold text-primary-text font-heading pr-4">{question}</span>
+        <motion.span
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.3 }}
+          className="text-accent-red text-xl flex-shrink-0"
+        >
+          ▼
+        </motion.span>
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="overflow-hidden"
+          >
+            <div className="px-6 py-4 text-muted-text font-body border-t border-border-light">
+              {answer}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
 // Mobile menu animation variants
 const mobileMenuVariants = {
   hidden: { x: "100%" },
@@ -104,7 +148,7 @@ export default function HomePage() {
               href="#contact"
               className="bg-accent-red text-primary-bg text-sm px-6 py-2 rounded-full font-semibold hover:bg-opacity-80 transition duration-300 shadow-md"
             >
-              Get a Quote
+              Free Assessment
             </a>
           </div>
 
@@ -142,7 +186,7 @@ export default function HomePage() {
                   className="mt-4 bg-accent-red text-primary-bg text-lg px-6 py-3 rounded-full font-semibold hover:bg-opacity-80 transition duration-300 shadow-md self-center"
                   onClick={closeMobileMenu}
                 >
-                  Get a Quote
+                  Free Assessment
                 </a>
               </div>
             </nav>
@@ -182,31 +226,37 @@ export default function HomePage() {
             className="text-4xl sm:text-6xl font-bold leading-tight mb-6 text-primary-text font-heading"
             variants={fadeInUp}
           >
-            <span className="text-accent-red">Secure by Design.</span> <br />
-            Intelligent Solutions for a Complex World.
+            <span className="text-accent-red">Zimbabwe's Premier Security Partner.</span> <br />
+            Protecting What Matters Most.
           </motion.h1>
           <motion.p
-            className="text-lg md:text-xl text-muted-text mb-8 max-w-2xl mx-auto font-body"
+            className="text-lg md:text-xl text-muted-text mb-4 max-w-2xl mx-auto font-body"
             variants={fadeInUp}
           >
-            Admill Systems delivers premium, design-led electronic security and IT services for forward-thinking businesses and institutions.
+            Award-winning electronic security and IT infrastructure solutions trusted by 200+ organizations across Zimbabwe.
           </motion.p>
-          <motion.div className="flex justify-center gap-4" variants={fadeInUp}>
+          <motion.p
+            className="text-base md:text-lg text-primary-bg bg-accent-red/90 inline-block px-6 py-2 rounded-full mb-8 font-semibold"
+            variants={fadeInUp}
+          >
+            ✓ 15+ Years Experience  ✓ 99.8% Uptime  ✓ 24/7 Support
+          </motion.p>
+          <motion.div className="flex flex-col sm:flex-row justify-center gap-4" variants={fadeInUp}>
             <motion.a
-              href="#services"
+              href="#contact"
               className="inline-block bg-accent-red text-primary-bg text-lg md:text-xl font-semibold px-8 py-3 rounded-full hover:bg-opacity-80 transition duration-300 shadow-lg"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Our Solutions
+              Get Free Security Assessment
             </motion.a>
             <motion.a
-              href="#contact"
-              className="inline-block border border-primary-text text-primary-text text-lg md:text-xl px-8 py-3 rounded-full hover:bg-primary-text hover:text-primary-bg transition duration-300 font-semibold"
+              href="#services"
+              className="inline-block border-2 border-primary-text text-primary-text text-lg md:text-xl px-8 py-3 rounded-full hover:bg-primary-text hover:text-primary-bg transition duration-300 font-semibold"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Talk to Us
+              Explore Solutions
             </motion.a>
           </motion.div>
         </motion.div>
@@ -247,9 +297,41 @@ export default function HomePage() {
             <p className="text-primary-text text-lg leading-relaxed mb-4 font-body">
               Admill Systems stands at the forefront of integrated electronic security and IT services. We blend sophisticated technology with elegant design, ensuring robust protection and seamless operation for modern businesses.
             </p>
-            <p className="text-muted-text leading-relaxed font-body">
+            <p className="text-muted-text leading-relaxed mb-6 font-body">
               Our approach is holistic – from initial consultation and bespoke system design to flawless installation and ongoing support. We are committed to building secure environments that empower, rather than restrict.
             </p>
+
+            {/* Trust Badges */}
+            <div className="grid grid-cols-2 gap-4 mt-8">
+              <div className="flex items-center space-x-3 bg-secondary-bg p-4 rounded-lg border border-border-light">
+                <div className="text-accent-red text-3xl">🏆</div>
+                <div>
+                  <p className="font-semibold text-primary-text text-sm">ISO Certified</p>
+                  <p className="text-xs text-muted-text">Quality Management</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-3 bg-secondary-bg p-4 rounded-lg border border-border-light">
+                <div className="text-accent-red text-3xl">🤝</div>
+                <div>
+                  <p className="font-semibold text-primary-text text-sm">Authorized Partner</p>
+                  <p className="text-xs text-muted-text">Hikvision & ZKTeco</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-3 bg-secondary-bg p-4 rounded-lg border border-border-light">
+                <div className="text-accent-red text-3xl">⚡</div>
+                <div>
+                  <p className="font-semibold text-primary-text text-sm">24/7 Support</p>
+                  <p className="text-xs text-muted-text">Always Available</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-3 bg-secondary-bg p-4 rounded-lg border border-border-light">
+                <div className="text-accent-red text-3xl">✓</div>
+                <div>
+                  <p className="font-semibold text-primary-text text-sm">15+ Years</p>
+                  <p className="text-xs text-muted-text">Industry Experience</p>
+                </div>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -260,16 +342,16 @@ export default function HomePage() {
           <h2 className="text-3xl sm:text-4xl font-bold text-center text-accent-red mb-12 font-heading">What We Offer</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {[
-              { id: 1, title: "Smart Surveillance", desc: "AI-powered CCTV with facial recognition, remote access & analytics.", icon: <FiShield /> },
-              { id: 2, title: "Access Control", desc: "Biometric, RFID, and card-based systems for secure entry.", icon: <FiKey /> },
-              { id: 3, title: "Alarm Systems", desc: "Silent intrusion detection for commercial and residential sites.", icon: <FiBell /> },
-              { id: 4, title: "Network Solutions", desc: "Structured cabling, wireless, and enterprise-grade network infrastructure.", icon: <FiWifi /> },
-              { id: 5, title: "Cloud Monitoring", desc: "Real-time alerts and 24/7 system health diagnostics from anywhere.", icon: <FiCloud /> },
-              { id: 6, title: "Workforce Tracking", desc: "Track attendance with portable, biometric rugged devices.", icon: <FiUserCheck /> }
+              { id: 1, title: "Smart Surveillance", desc: "AI-powered CCTV with facial recognition, remote access & analytics.", icon: <FiShield />, pricing: "Custom Quote" },
+              { id: 2, title: "Access Control", desc: "Biometric, RFID, and card-based systems for secure entry.", icon: <FiKey />, pricing: "Custom Quote" },
+              { id: 3, title: "Alarm Systems", desc: "Silent intrusion detection for commercial and residential sites.", icon: <FiBell />, pricing: "Custom Quote" },
+              { id: 4, title: "Network Solutions", desc: "Structured cabling, wireless, and enterprise-grade network infrastructure.", icon: <FiWifi />, pricing: "Custom Quote" },
+              { id: 5, title: "Cloud Monitoring", desc: "Real-time alerts and 24/7 system health diagnostics from anywhere.", icon: <FiCloud />, pricing: "Custom Quote" },
+              { id: 6, title: "Workforce Tracking", desc: "Track attendance with portable, biometric rugged devices.", icon: <FiUserCheck />, pricing: "Custom Quote" }
             ].map((item, idx) => (
               <motion.div
                 key={item.id}
-                className="bg-primary-bg p-8 rounded-xl shadow-md border border-border-light hover:shadow-lg hover:scale-[1.02] transition-all duration-300 flex flex-col items-start"
+                className="bg-primary-bg p-8 rounded-xl shadow-md border border-border-light hover:shadow-xl hover:scale-[1.03] transition-all duration-300 flex flex-col items-start"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.4 }}
@@ -279,7 +361,16 @@ export default function HomePage() {
                   {item.icon}
                 </div>
                 <h3 className="text-xl font-semibold mb-2 text-primary-text font-heading">{item.title}</h3>
-                <p className="text-base text-muted-text leading-relaxed font-body">{item.desc}</p>
+                <p className="text-base text-muted-text leading-relaxed mb-4 flex-grow font-body">{item.desc}</p>
+                <div className="w-full border-t border-border-light pt-4 mt-2">
+                  <p className="text-sm text-accent-red font-semibold mb-3">{item.pricing}</p>
+                  <a
+                    href="#contact"
+                    className="inline-block text-sm bg-accent-red text-primary-bg px-4 py-2 rounded-full hover:bg-opacity-90 transition-colors duration-300 font-semibold"
+                  >
+                    Get Quote →
+                  </a>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -358,6 +449,31 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Stats/Metrics Section */}
+      <section className="bg-accent-red py-16 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-primary-bg">
+            {[
+              { value: "15+", label: "Years in Business" },
+              { value: "500+", label: "Projects Completed" },
+              { value: "200+", label: "Happy Clients" },
+              { value: "99.8%", label: "Uptime Guarantee" }
+            ].map((stat, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, scale: 0.5 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+              >
+                <div className="text-4xl md:text-5xl font-bold mb-2 font-heading">{stat.value}</div>
+                <div className="text-lg font-body opacity-90">{stat.label}</div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Clients Section */}
       <section id="clients" className="bg-primary-bg px-6 py-20 max-w-6xl mx-auto text-center">
         <h2 className="text-3xl sm:text-4xl font-bold text-accent-red mb-10 font-heading">Trusted By Leading Organizations</h2>
@@ -368,6 +484,114 @@ export default function HomePage() {
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ delay: 0.4 }}>Kefalos / Ironblock</motion.div>
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ delay: 0.5 }}>Kingswood Contracting</motion.div>
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ delay: 0.6 }}>Residential Estates</motion.div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="bg-secondary-bg py-20 px-6">
+        <div className="max-w-6xl mx-auto">
+          <motion.h2
+            className="text-3xl sm:text-4xl font-bold text-center text-accent-red mb-12 font-heading"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+          >
+            What Our Clients Say
+          </motion.h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                name: "David Murira",
+                role: "Operations Manager",
+                company: "Kingswood Contracting",
+                quote: "Admill Systems transformed our site security with state-of-the-art CCTV and access control. Their professionalism and technical expertise are unmatched.",
+                rating: 5
+              },
+              {
+                name: "Pastor John Sibanda",
+                role: "Senior Pastor",
+                company: "New Life Covenant Church",
+                quote: "The biometric attendance system has streamlined our operations significantly. The team was courteous, efficient, and delivered beyond expectations.",
+                rating: 5
+              },
+              {
+                name: "Mrs. T. Moyo",
+                role: "School Administrator",
+                company: "Mother Touch Schools",
+                quote: "Our campus network infrastructure is now world-class thanks to Admill. Students and staff enjoy seamless connectivity across all buildings.",
+                rating: 5
+              }
+            ].map((testimonial, idx) => (
+              <motion.div
+                key={idx}
+                className="bg-primary-bg p-8 rounded-xl shadow-md border border-border-light"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+              >
+                <div className="flex mb-3">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <span key={i} className="text-accent-red text-xl">★</span>
+                  ))}
+                </div>
+                <p className="text-primary-text italic mb-6 font-body leading-relaxed">
+                  "{testimonial.quote}"
+                </p>
+                <div className="border-t border-border-light pt-4">
+                  <p className="font-semibold text-primary-text font-heading">{testimonial.name}</p>
+                  <p className="text-sm text-muted-text">{testimonial.role}</p>
+                  <p className="text-sm text-accent-red font-semibold">{testimonial.company}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="bg-primary-bg py-20 px-6">
+        <div className="max-w-4xl mx-auto">
+          <motion.h2
+            className="text-3xl sm:text-4xl font-bold text-center text-accent-red mb-12 font-heading"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+          >
+            Frequently Asked Questions
+          </motion.h2>
+          <div className="space-y-4">
+            {[
+              {
+                q: "How long does a typical security system installation take?",
+                a: "Installation timeframes vary based on project scope. A standard residential system takes 1-2 days, while commercial installations typically require 3-7 days. We provide detailed timelines during our free consultation."
+              },
+              {
+                q: "Do you offer 24/7 monitoring and support?",
+                a: "Yes! Our cloud monitoring service provides 24/7 system health diagnostics with real-time alerts. We also offer dedicated technical support during business hours and emergency response for critical issues."
+              },
+              {
+                q: "What brands and technologies do you use?",
+                a: "We work with industry-leading brands including Hikvision, Dahua, ZKTeco, Mikrotik, and Ubiquiti. We select equipment based on your specific needs, ensuring reliability and future-proof technology."
+              },
+              {
+                q: "Can I access my security system remotely?",
+                a: "Absolutely. All our modern systems include mobile app access, allowing you to view live feeds, control access points, and receive alerts from anywhere in the world via smartphone or computer."
+              },
+              {
+                q: "What maintenance is required for security systems?",
+                a: "We recommend quarterly inspections for commercial systems and bi-annual checks for residential installations. We offer flexible maintenance contracts that include cleaning, software updates, and component testing."
+              },
+              {
+                q: "Do you provide warranties and guarantees?",
+                a: "Yes. All installations include a 12-month workmanship warranty. Equipment comes with manufacturer warranties ranging from 2-5 years. We also offer extended warranty packages for added peace of mind."
+              }
+            ].map((faq, idx) => (
+              <FAQItem key={idx} question={faq.q} answer={faq.a} index={idx} />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -424,12 +648,69 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
           >
             <h3 className="text-2xl font-bold text-primary-text mb-6 font-heading">Send Us a Message</h3>
-            <form className="grid gap-4 text-left">
-              <input type="text" placeholder="Your Name" className="bg-primary-bg border border-border-light px-4 py-3 rounded-md text-primary-text placeholder-muted-text w-full focus:outline-none focus:ring-2 focus:ring-accent-red" />
-              <input type="email" placeholder="Your Email" className="bg-primary-bg border border-border-light px-4 py-3 rounded-md text-primary-text placeholder-muted-text w-full focus:outline-none focus:ring-2 focus:ring-accent-red" />
-              <textarea placeholder="Message" rows="5" className="bg-primary-bg border border-border-light px-4 py-3 rounded-md text-primary-text placeholder-muted-text w-full focus:outline-none focus:ring-2 focus:ring-accent-red"></textarea>
-              <button type="submit" className="bg-accent-red hover:bg-opacity-80 transition-colors duration-300 px-8 py-3 rounded-full text-primary-bg font-semibold shadow-lg">Send Message</button>
-            </form>
+            <form
+  className="grid gap-4 text-left"
+  onSubmit={async (e) => {
+    e.preventDefault();
+
+    const name = e.target[0].value;
+    const email = e.target[1].value;
+    const message = e.target[2].value;
+
+    // Track event in Matomo
+    if (typeof window !== "undefined" && window._mtm) {
+      window._mtm.push({
+        event: "formSubmission",
+        formName: "Contact Form",
+      });
+      console.log("📩 Matomo: Contact form submitted");
+    }
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      if (res.ok) {
+        alert("✅ Your message has been sent.");
+        e.target.reset();
+      } else {
+        alert("❌ Failed to send your message. Please try again.");
+      }
+    } catch (err) {
+      console.error("Error submitting form:", err);
+      alert("⚠️ Error sending your message. Please try again later.");
+    }
+  }}
+>
+  <input
+    type="text"
+    placeholder="Your Name"
+    required
+    className="bg-primary-bg border border-border-light px-4 py-3 rounded-md text-primary-text placeholder-muted-text w-full focus:outline-none focus:ring-2 focus:ring-accent-red"
+  />
+  <input
+    type="email"
+    placeholder="Your Email"
+    required
+    className="bg-primary-bg border border-border-light px-4 py-3 rounded-md text-primary-text placeholder-muted-text w-full focus:outline-none focus:ring-2 focus:ring-accent-red"
+  />
+  <textarea
+    placeholder="Message"
+    rows="5"
+    required
+    className="bg-primary-bg border border-border-light px-4 py-3 rounded-md text-primary-text placeholder-muted-text w-full focus:outline-none focus:ring-2 focus:ring-accent-red"
+  ></textarea>
+  <button
+    type="submit"
+    className="bg-accent-red hover:bg-opacity-80 transition-colors duration-300 px-8 py-3 rounded-full text-primary-bg font-semibold shadow-lg"
+  >
+    Send Message
+  </button>
+</form>
+
           </motion.div>
         </div>
       </section>

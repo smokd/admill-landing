@@ -47,6 +47,123 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      {/* Structured Data - Organization Schema */}
+      <Script id="schema-organization" type="application/ld+json" strategy="beforeInteractive">
+        {`
+          {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Admill Systems",
+            "url": "https://www.admill.co.zw",
+            "logo": "https://www.admill.co.zw/logo-02.png",
+            "description": "Premium electronic security and IT services provider in Zimbabwe",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Hogerty Hill",
+              "addressLocality": "Harare",
+              "addressCountry": "ZW"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+263-715-017-744",
+              "contactType": "Customer Service",
+              "email": "info@admill.co.zw",
+              "availableLanguage": ["English"]
+            },
+            "sameAs": [
+              "https://www.linkedin.com/company/admill-systems",
+              "https://www.facebook.com/admillsystems"
+            ]
+          }
+        `}
+      </Script>
+
+      {/* Structured Data - LocalBusiness Schema */}
+      <Script id="schema-local-business" type="application/ld+json" strategy="beforeInteractive">
+        {`
+          {
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "Admill Systems",
+            "image": "https://www.admill.co.zw/hero-security.jpg",
+            "priceRange": "$$",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Hogerty Hill",
+              "addressLocality": "Harare",
+              "addressCountry": "ZW"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": -17.8252,
+              "longitude": 31.0335
+            },
+            "url": "https://www.admill.co.zw",
+            "telephone": "+263-715-017-744",
+            "email": "info@admill.co.zw",
+            "openingHoursSpecification": {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+              "opens": "09:00",
+              "closes": "17:00"
+            }
+          }
+        `}
+      </Script>
+
+      {/* Structured Data - Service Schema */}
+      <Script id="schema-services" type="application/ld+json" strategy="beforeInteractive">
+        {`
+          {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "serviceType": "Security Systems Installation",
+            "provider": {
+              "@type": "Organization",
+              "name": "Admill Systems"
+            },
+            "areaServed": {
+              "@type": "Country",
+              "name": "Zimbabwe"
+            },
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Security and IT Services",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "CCTV Surveillance Systems"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Access Control Systems"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Alarm & Intrusion Detection"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Network Infrastructure"
+                  }
+                }
+              ]
+            }
+          }
+        `}
+      </Script>
+
       {/* Google Analytics & Google Ads gtag.js scripts using next/script */}
       {/* Replace G-XXXXXXXXXX with your actual GA4 Measurement ID */}
       {/* Replace AW-YYYYYYYYY with your Google Ads Conversion ID */}
@@ -71,21 +188,34 @@ export default function RootLayout({
         `}
       </Script>
 
-      {/* Matomo Analytics */}
-<Script id="matomo-tracking" strategy="afterInteractive">
+      {/* Matomo Tag Manager */}
+<Script id="matomo-tagmanager" strategy="afterInteractive">
   {`
-    var _paq = window._paq = window._paq || [];
-    _paq.push(['trackPageView']);
-    _paq.push(['enableLinkTracking']);
+    var _mtm = window._mtm = window._mtm || [];
+    _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
     (function() {
-      var u="https://admill.co.zw/analytics/";
-      _paq.push(['setTrackerUrl', u+'matomo.php']);
-      _paq.push(['setSiteId', 'Fg7DkXUJ']);
       var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+      g.async=true; g.src='https://admill.co.zw/analytics/js/container_Fg7DkXUJ.js';
+      s.parentNode.insertBefore(g,s);
     })();
   `}
 </Script>
+
+      {/* Tawk.to Live Chat Widget */}
+      <Script id="tawk-to-widget" strategy="lazyOnload">
+        {`
+          var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+          (function(){
+            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+            s1.async=true;
+            s1.src='https://embed.tawk.to/YOUR_TAWK_PROPERTY_ID/YOUR_WIDGET_ID';
+            s1.charset='UTF-8';
+            s1.setAttribute('crossorigin','*');
+            s0.parentNode.insertBefore(s1,s0);
+          })();
+        `}
+      </Script>
+
 
 
       <body className={`${geistSans.variable} ${geistMono.variable} bg-black text-white font-sans tracking-wide`}>
