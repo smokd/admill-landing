@@ -67,10 +67,36 @@ npm start
 
 See **[DEPLOYMENT.md](./DEPLOYMENT.md)** for full guide.
 
-**Quick deploy to production:**
+### Quick Deploy (Local to AWS)
+
+Use the enhanced `deploy.ps1` script with SSH key authentication:
+
+```powershell
+# First-time setup: Generate SSH key and add public key to server
+# See SESSION_NOTES_2025-11-12.md for details
+
+# Deploy with identity file (upload + nginx reload)
+.\deploy.ps1 -IdentityFile "C:\Users\USER\.ssh\id_ed25519" -ReloadUser ubuntu
+
+# Upload only (skip nginx reload if user lacks sudo)
+.\deploy.ps1 -IdentityFile "C:\Users\USER\.ssh\id_ed25519" -SkipReload
+
+# Quick re-upload (skip build)
+.\deploy.ps1 -IdentityFile "C:\Users\USER\.ssh\id_ed25519" -SkipBuild -ReloadUser ubuntu
+```
+
+**Script parameters:**
+- `-IdentityFile` – Path to SSH private key
+- `-UploadUser` – User for file upload (default: `ftpuser`)
+- `-ReloadUser` – User for nginx reload (default: same as upload)
+- `-SkipBuild` – Skip Next.js build step
+- `-SkipReload` – Skip nginx reload step
+- `-Host` – Target server (default: ec2-13-244-223-7.af-south-1.compute.amazonaws.com)
+
+### Server Setup
 
 ```bash
-# Server setup
+# Server-side (PM2)
 npm ci
 npm run build
 pm2 start ecosystem.config.js

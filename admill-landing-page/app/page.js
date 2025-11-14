@@ -84,6 +84,10 @@ const scrollToTopVariants = {
 export default function HomePage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
+  // Contact form anti-spam timestamp (used by backend to prevent instant submissions)
+  const [formTimestamp, setFormTimestamp] = useState(0);
+  const [canSubmit, setCanSubmit] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -106,6 +110,17 @@ export default function HomePage() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
+  }, []);
+
+  // Set the form timestamp on client mount so it's at least a few seconds before submit
+  useEffect(() => {
+    setFormTimestamp(Date.now());
+  }, []);
+
+  // Enable submit after 3 seconds to align with backend timing check
+  useEffect(() => {
+    const t = setTimeout(() => setCanSubmit(true), 3000);
+    return () => clearTimeout(t);
   }, []);
 
   const scrollToTop = () => {
@@ -226,20 +241,20 @@ export default function HomePage() {
             className="text-4xl sm:text-6xl font-bold leading-tight mb-6 text-primary-text font-heading"
             variants={fadeInUp}
           >
-            <span className="text-accent-red">Zimbabwe's Premier Security Partner.</span> <br />
-            Protecting What Matters Most.
+            <span className="text-accent-red">Holistic Electronic Engineering Solutions.</span> <br />
+            Security • Integration • Building Management
           </motion.h1>
           <motion.p
             className="text-lg md:text-xl text-muted-text mb-4 max-w-2xl mx-auto font-body"
             variants={fadeInUp}
           >
-            Award-winning electronic security and IT infrastructure solutions trusted by 200+ organizations across Zimbabwe.
+            Award-winning security, systems integration, and BMS solutions trusted by 200+ organizations across Zimbabwe.
           </motion.p>
           <motion.p
             className="text-base md:text-lg text-primary-bg bg-accent-red/90 inline-block px-6 py-2 rounded-full mb-8 font-semibold"
             variants={fadeInUp}
           >
-            ✓ 15+ Years Experience  ✓ 99.8% Uptime  ✓ 24/7 Support
+            ✓ 15+ Years Experience  ✓ Systems Integration  ✓ 24/7 Support
           </motion.p>
           <motion.div className="flex flex-col sm:flex-row justify-center gap-4" variants={fadeInUp}>
             <motion.a
@@ -293,12 +308,12 @@ export default function HomePage() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl sm:text-4xl font-bold text-accent-red mb-6 font-heading">We Are Admill</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-accent-red mb-6 font-heading">Engineering Excellence Since 2009</h2>
             <p className="text-primary-text text-lg leading-relaxed mb-4 font-body">
-              Admill Systems stands at the forefront of integrated electronic security and IT services. We blend sophisticated technology with elegant design, ensuring robust protection and seamless operation for modern businesses.
+              Admill Systems is Zimbabwe's leading provider of holistic electronic engineering solutions. We combine security systems, IT infrastructure, and building automation to create intelligent, integrated environments.
             </p>
             <p className="text-muted-text leading-relaxed mb-6 font-body">
-              Our approach is holistic – from initial consultation and bespoke system design to flawless installation and ongoing support. We are committed to building secure environments that empower, rather than restrict.
+              From consultation and custom system design to seamless installation and ongoing support, we deliver complete solutions that work together. Our expertise spans CCTV surveillance, access control, network infrastructure, and Building Management Systems (BMS) – all integrated into cohesive ecosystems that enhance security, efficiency, and control.
             </p>
 
             {/* Trust Badges */}
@@ -314,21 +329,21 @@ export default function HomePage() {
                 <div className="text-accent-red text-3xl">🤝</div>
                 <div>
                   <p className="font-semibold text-primary-text text-sm">Authorized Partner</p>
-                  <p className="text-xs text-muted-text">Hikvision & ZKTeco</p>
+                  <p className="text-xs text-muted-text">Hikvision & Honeywell</p>
                 </div>
               </div>
               <div className="flex items-center space-x-3 bg-secondary-bg p-4 rounded-lg border border-border-light">
                 <div className="text-accent-red text-3xl">⚡</div>
                 <div>
-                  <p className="font-semibold text-primary-text text-sm">24/7 Support</p>
-                  <p className="text-xs text-muted-text">Always Available</p>
+                  <p className="font-semibold text-primary-text text-sm">Systems Integration</p>
+                  <p className="text-xs text-muted-text">Multi-platform expertise</p>
                 </div>
               </div>
               <div className="flex items-center space-x-3 bg-secondary-bg p-4 rounded-lg border border-border-light">
                 <div className="text-accent-red text-3xl">✓</div>
                 <div>
                   <p className="font-semibold text-primary-text text-sm">15+ Years</p>
-                  <p className="text-xs text-muted-text">Industry Experience</p>
+                  <p className="text-xs text-muted-text">Engineering Excellence</p>
                 </div>
               </div>
             </div>
@@ -339,15 +354,15 @@ export default function HomePage() {
       {/* Services Section */}
       <section id="services" className="bg-secondary-bg py-20 px-6">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center text-accent-red mb-12 font-heading">What We Offer</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-center text-accent-red mb-12 font-heading">Comprehensive Solutions</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {[
               { id: 1, title: "Smart Surveillance", desc: "AI-powered CCTV with facial recognition, remote access & analytics.", icon: <FiShield />, pricing: "Custom Quote" },
               { id: 2, title: "Access Control", desc: "Biometric, RFID, and card-based systems for secure entry.", icon: <FiKey />, pricing: "Custom Quote" },
-              { id: 3, title: "Alarm Systems", desc: "Silent intrusion detection for commercial and residential sites.", icon: <FiBell />, pricing: "Custom Quote" },
-              { id: 4, title: "Network Solutions", desc: "Structured cabling, wireless, and enterprise-grade network infrastructure.", icon: <FiWifi />, pricing: "Custom Quote" },
-              { id: 5, title: "Cloud Monitoring", desc: "Real-time alerts and 24/7 system health diagnostics from anywhere.", icon: <FiCloud />, pricing: "Custom Quote" },
-              { id: 6, title: "Workforce Tracking", desc: "Track attendance with portable, biometric rugged devices.", icon: <FiUserCheck />, pricing: "Custom Quote" }
+              { id: 3, title: "Intrusion Detection", desc: "Silent alarm systems with 24/7 monitoring for critical sites.", icon: <FiBell />, pricing: "Custom Quote" },
+              { id: 4, title: "Building Management Systems", desc: "Integrated BMS for HVAC, lighting, energy, and environmental control.", icon: <FiCloud />, pricing: "Custom Quote" },
+              { id: 5, title: "Systems Integration", desc: "Multi-system integration connecting security, IT, and building automation.", icon: <FiWifi />, pricing: "Custom Quote" },
+              { id: 6, title: "Workforce Management", desc: "Biometric attendance tracking with portable rugged devices.", icon: <FiUserCheck />, pricing: "Custom Quote" }
             ].map((item, idx) => (
               <motion.div
                 key={item.id}
@@ -374,6 +389,131 @@ export default function HomePage() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Integration & BMS Capabilities Section - NEW */}
+      <section className="bg-primary-bg py-20 px-6">
+        <div className="max-w-6xl mx-auto">
+          <motion.h2
+            className="text-3xl sm:text-4xl font-bold text-center text-accent-red mb-6 font-heading"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+          >
+            Complete Systems Integration
+          </motion.h2>
+          <motion.p
+            className="text-center text-primary-text text-lg mb-12 max-w-3xl mx-auto font-body"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            We don't just install systems — we integrate them. Our holistic approach connects security, IT, and building automation into unified, intelligent ecosystems.
+          </motion.p>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Building Management Systems */}
+            <motion.div
+              className="bg-secondary-bg p-8 rounded-xl border border-border-light"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="text-4xl text-accent-red mb-4">🏢</div>
+              <h3 className="text-2xl font-bold text-primary-text mb-4 font-heading">Building Management Systems (BMS)</h3>
+              <p className="text-muted-text mb-4 font-body leading-relaxed">
+                Centralized control and monitoring of your building's mechanical and electrical systems. Our BMS solutions optimize energy efficiency, enhance comfort, and reduce operational costs.
+              </p>
+              <ul className="space-y-2 text-primary-text font-body">
+                <li className="flex items-start">
+                  <span className="text-accent-red mr-2">✓</span>
+                  <span>HVAC control and optimization</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-accent-red mr-2">✓</span>
+                  <span>Lighting automation and energy management</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-accent-red mr-2">✓</span>
+                  <span>Environmental monitoring (temperature, humidity, air quality)</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-accent-red mr-2">✓</span>
+                  <span>Power monitoring and load management</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-accent-red mr-2">✓</span>
+                  <span>Real-time dashboards and remote access</span>
+                </li>
+              </ul>
+            </motion.div>
+
+            {/* Systems Integration */}
+            <motion.div
+              className="bg-secondary-bg p-8 rounded-xl border border-border-light"
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="text-4xl text-accent-red mb-4">🔗</div>
+              <h3 className="text-2xl font-bold text-primary-text mb-4 font-heading">Multi-System Integration</h3>
+              <p className="text-muted-text mb-4 font-body leading-relaxed">
+                Break down silos between security, IT, and building systems. We create cohesive environments where all systems communicate and work together seamlessly.
+              </p>
+              <ul className="space-y-2 text-primary-text font-body">
+                <li className="flex items-start">
+                  <span className="text-accent-red mr-2">✓</span>
+                  <span>Security + BMS integration (access control triggers lighting, HVAC)</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-accent-red mr-2">✓</span>
+                  <span>Unified dashboards across multiple platforms</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-accent-red mr-2">✓</span>
+                  <span>Protocol bridging (BACnet, Modbus, SNMP, API integration)</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-accent-red mr-2">✓</span>
+                  <span>Legacy system modernization and integration</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-accent-red mr-2">✓</span>
+                  <span>IoT device integration and smart building automation</span>
+                </li>
+              </ul>
+            </motion.div>
+          </div>
+
+          {/* Integration Benefits */}
+          <motion.div
+            className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <div className="bg-accent-red/10 border border-accent-red/30 p-6 rounded-lg text-center">
+              <div className="text-3xl font-bold text-accent-red mb-2 font-heading">30-50%</div>
+              <p className="text-primary-text font-semibold font-body">Energy Savings</p>
+              <p className="text-sm text-muted-text mt-2">Through optimized BMS control</p>
+            </div>
+            <div className="bg-accent-red/10 border border-accent-red/30 p-6 rounded-lg text-center">
+              <div className="text-3xl font-bold text-accent-red mb-2 font-heading">Single Pane</div>
+              <p className="text-primary-text font-semibold font-body">Unified Control</p>
+              <p className="text-sm text-muted-text mt-2">Manage all systems from one dashboard</p>
+            </div>
+            <div className="bg-accent-red/10 border border-accent-red/30 p-6 rounded-lg text-center">
+              <div className="text-3xl font-bold text-accent-red mb-2 font-heading">24/7</div>
+              <p className="text-primary-text font-semibold font-body">Automated Response</p>
+              <p className="text-sm text-muted-text mt-2">Intelligent systems that self-optimize</p>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -502,8 +642,8 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                name: "David Murira",
-                role: "Operations Manager",
+                name: "Saul Murira",
+                role: "Technical Supervisor",
                 company: "Kingswood Contracting",
                 quote: "Admill Systems transformed our site security with state-of-the-art CCTV and access control. Their professionalism and technical expertise are unmatched.",
                 rating: 5
@@ -511,12 +651,12 @@ export default function HomePage() {
               {
                 name: "Pastor John Sibanda",
                 role: "Senior Pastor",
-                company: "New Life Covenant Church",
+                company: "Religious Organization",
                 quote: "The biometric attendance system has streamlined our operations significantly. The team was courteous, efficient, and delivered beyond expectations.",
                 rating: 5
               },
               {
-                name: "Mrs. T. Moyo",
+                name: "Mrs. J. Matengu",
                 role: "School Administrator",
                 company: "Mother Touch Schools",
                 quote: "Our campus network infrastructure is now world-class thanks to Admill. Students and staff enjoy seamless connectivity across all buildings.",
@@ -653,9 +793,14 @@ export default function HomePage() {
   onSubmit={async (e) => {
     e.preventDefault();
 
-    const name = e.target[0].value;
-    const email = e.target[1].value;
-    const message = e.target[2].value;
+    const form = e.currentTarget;
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const message = form.message.value.trim();
+    const honeypot = form.honeypot.value;
+    const timestamp = form.timestamp.value || String(formTimestamp);
+
+    console.log("📩 Submitting form:", { name, email, message });
 
     // Track event in Matomo
     if (typeof window !== "undefined" && window._mtm) {
@@ -663,41 +808,89 @@ export default function HomePage() {
         event: "formSubmission",
         formName: "Contact Form",
       });
-      console.log("📩 Matomo: Contact form submitted");
+      console.log("✅ Matomo tracking sent");
     }
 
+    setIsSubmitting(true);
     try {
-      const res = await fetch("/api/contact", {
+      // POST to Node.js API server (proxied by nginx at /api/)
+      const apiUrl = "https://admill.co.zw/api/contact";
+      console.log("🌐 Sending request to:", apiUrl);
+
+      // POST to your server's API folder
+      const res = await fetch(apiUrl, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message }),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({ name, email, message, honeypot, timestamp }),
       });
+
+      console.log("📡 Response status:", res.status);
+
+      // Try to parse response
+      let responseData;
+      try {
+        responseData = await res.json();
+        console.log("📦 Response data:", responseData);
+      } catch (parseError) {
+        console.warn("⚠️ Could not parse JSON response:", parseError);
+        const textResponse = await res.text();
+        console.log("📄 Raw response:", textResponse);
+      }
 
       if (res.ok) {
         alert("✅ Your message has been sent.");
         e.target.reset();
       } else {
-        alert("❌ Failed to send your message. Please try again.");
+        console.error("❌ Server error:", res.status, responseData);
+        alert(`❌ Failed to send your message. Server returned: ${res.status}`);
       }
     } catch (err) {
-      console.error("Error submitting form:", err);
-      alert("⚠️ Error sending your message. Please try again later.");
+      console.error("🔥 Error submitting form:", err);
+      console.error("Error details:", {
+        message: err.message,
+        name: err.name,
+        stack: err.stack
+      });
+      alert(`⚠️ Error sending your message: ${err.message}`);
+    } finally {
+      setIsSubmitting(false);
     }
   }}
 >
+  {/* Honeypot and timing fields for spam prevention */}
   <input
     type="text"
+    name="honeypot"
+    tabIndex={-1}
+    autoComplete="off"
+    className="hidden"
+    aria-hidden="true"
+  />
+  <input type="hidden" name="timestamp" value={formTimestamp} />
+
+  <input
+    type="text"
+    name="name"
+    minLength={2}
+    maxLength={50}
     placeholder="Your Name"
     required
     className="bg-primary-bg border border-border-light px-4 py-3 rounded-md text-primary-text placeholder-muted-text w-full focus:outline-none focus:ring-2 focus:ring-accent-red"
   />
   <input
     type="email"
+    name="email"
     placeholder="Your Email"
     required
     className="bg-primary-bg border border-border-light px-4 py-3 rounded-md text-primary-text placeholder-muted-text w-full focus:outline-none focus:ring-2 focus:ring-accent-red"
   />
   <textarea
+    name="message"
+    minLength={10}
+    maxLength={1000}
     placeholder="Message"
     rows="5"
     required
@@ -705,9 +898,11 @@ export default function HomePage() {
   ></textarea>
   <button
     type="submit"
-    className="bg-accent-red hover:bg-opacity-80 transition-colors duration-300 px-8 py-3 rounded-full text-primary-bg font-semibold shadow-lg"
+    disabled={!canSubmit || isSubmitting}
+    aria-disabled={!canSubmit || isSubmitting}
+    className={`bg-accent-red transition-colors duration-300 px-8 py-3 rounded-full text-primary-bg font-semibold shadow-lg ${(!canSubmit || isSubmitting) ? 'opacity-60 cursor-not-allowed' : 'hover:bg-opacity-80'}`}
   >
-    Send Message
+    {isSubmitting ? 'Sending…' : (!canSubmit ? 'Please wait…' : 'Send Message')}
   </button>
 </form>
 

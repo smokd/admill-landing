@@ -15,14 +15,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Admill Systems | Electronic Engineering',
-  description: 'Admill Systems provides world-class CCTV, smart access control, alarm and intrusion,IT security solutions that blend design and technology for a safer, smarter future.',
-  keywords: "Security Systems, CCTV, Access Control, Alarm Systems,ESP32, Automation, biometric, facial recognition, python, IT Infrastructure, Global Surveillance, Networking, Wireless, Mikrotik, Ubiquiti",
+  title: 'Admill Systems | Holistic Electronic Engineering Solutions',
+  description: 'Zimbabwe\'s leading provider of integrated security, BMS, and systems engineering. CCTV, access control, building automation, and complete IT infrastructure solutions.',
+  keywords: "Security Systems, CCTV, Access Control, Building Management Systems, BMS, Systems Integration, Electronic Engineering, Alarm Systems, Automation, Biometric, IT Infrastructure, HVAC Control, Surveillance, Networking, Wireless, Mikrotik, Ubiquiti, Hikvision, Honeywell",
   authors: [{ name: "Admill Systems" }],
   robots: "index, follow", // This is correctly set to allow indexing
   openGraph: {
-    title: "Admill Systems | Secure by Design",
-    description: "We deliver premium, design-led electronic security and IT services for forward-thinking businesses and institutions.",
+    title: "Admill Systems | Holistic Electronic Engineering",
+    description: "Complete electronic engineering solutions: Security, BMS, and systems integration for intelligent buildings and enterprises.",
     // IMPORTANT: Use the full, absolute URL for social media crawlers
     images: "https://www.admill.co.zw/hero-security.jpg", // <--- CORRECTED HERE
     type: "website",
@@ -56,7 +56,7 @@ export default function RootLayout({
             "name": "Admill Systems",
             "url": "https://www.admill.co.zw",
             "logo": "https://www.admill.co.zw/logo-02.png",
-            "description": "Premium electronic security and IT services provider in Zimbabwe",
+            "description": "Holistic electronic engineering solutions: Security systems, BMS, and systems integration for intelligent buildings",
             "address": {
               "@type": "PostalAddress",
               "streetAddress": "Hogerty Hill",
@@ -142,6 +142,20 @@ export default function RootLayout({
                   "itemOffered": {
                     "@type": "Service",
                     "name": "Access Control Systems"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Building Management Systems (BMS)"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Systems Integration"
                   }
                 },
                 {

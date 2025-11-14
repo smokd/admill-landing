@@ -3,9 +3,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  // Removed 'output: export' to enable API routes and server-side features
+  output: 'export', // Enable static site generation
+  // NOTE: This disables API routes. Contact form must POST to external endpoint.
   images: {
-    unoptimized: true, // Can be set to false if you want Next.js image optimization
+    unoptimized: true, // Required for static export
     remotePatterns: [
       {
         protocol: 'https',
@@ -13,7 +14,6 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '**',
       },
-      // If you have other remote image sources, add them here too
     ],
   },
 };
