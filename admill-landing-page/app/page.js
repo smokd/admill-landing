@@ -308,7 +308,7 @@ export default function HomePage() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl sm:text-4xl font-bold text-accent-red mb-6 font-heading">Engineering Excellence Since 2009</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-accent-red mb-6 font-heading">Engineering Excellence Since 2017</h2>
             <p className="text-primary-text text-lg leading-relaxed mb-4 font-body">
               Admill Systems is Zimbabwe's leading provider of holistic electronic engineering solutions. We combine security systems, IT infrastructure, and building automation to create intelligent, integrated environments.
             </p>
