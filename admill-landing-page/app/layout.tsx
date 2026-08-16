@@ -15,14 +15,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Admill Systems | Holistic Electronic Engineering Solutions',
-  description: 'Zimbabwe\'s leading provider of integrated security, BMS, and systems engineering. CCTV, access control, building automation, and complete IT infrastructure solutions.',
-  keywords: "Security Systems, CCTV, Access Control, Building Management Systems, BMS, Systems Integration, Electronic Engineering, Alarm Systems, Automation, Biometric, IT Infrastructure, HVAC Control, Surveillance, Networking, Wireless, Mikrotik, Ubiquiti, Hikvision, Honeywell",
+  title: "Admill Systems | Holistic Electronic Engineering Solutions",
+  description:
+    "Zimbabwe's leading provider of integrated security, BMS, and systems engineering. CCTV, access control, building automation, and complete IT infrastructure solutions.",
+  keywords:
+    "Security Systems, CCTV, Access Control, Building Management Systems, BMS, Systems Integration, Electronic Engineering, Alarm Systems, Automation, Biometric, IT Infrastructure, HVAC Control, Surveillance, Networking, Wireless, Mikrotik, Ubiquiti, Hikvision, Honeywell",
   authors: [{ name: "Admill Systems" }],
   robots: "index, follow", // This is correctly set to allow indexing
   openGraph: {
     title: "Admill Systems | Holistic Electronic Engineering",
-    description: "Complete electronic engineering solutions: Security, BMS, and systems integration for intelligent buildings and enterprises.",
+    description:
+      "Complete electronic engineering solutions: Security, BMS, and systems integration for intelligent buildings and enterprises.",
     // IMPORTANT: Use the full, absolute URL for social media crawlers
     images: "https://www.admill.co.zw/hero-security.jpg", // <--- CORRECTED HERE
     type: "website",
@@ -30,13 +33,21 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.ico' },
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
-      { url: '/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' },
+      { url: "/favicon.ico" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      {
+        url: "/android-chrome-192x192.png",
+        sizes: "192x192",
+        type: "image/png",
+      },
+      {
+        url: "/android-chrome-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
+      },
     ],
-    apple: '/apple-touch-icon.png',
+    apple: "/apple-touch-icon.png",
   },
 };
 
@@ -48,7 +59,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       {/* Structured Data - Organization Schema */}
-      <Script id="schema-organization" type="application/ld+json" strategy="beforeInteractive">
+      <Script
+        id="schema-organization"
+        type="application/ld+json"
+        strategy="beforeInteractive"
+      >
         {`
           {
             "@context": "https://schema.org",
@@ -79,7 +94,11 @@ export default function RootLayout({
       </Script>
 
       {/* Structured Data - LocalBusiness Schema */}
-      <Script id="schema-local-business" type="application/ld+json" strategy="beforeInteractive">
+      <Script
+        id="schema-local-business"
+        type="application/ld+json"
+        strategy="beforeInteractive"
+      >
         {`
           {
             "@context": "https://schema.org",
@@ -112,7 +131,11 @@ export default function RootLayout({
       </Script>
 
       {/* Structured Data - Service Schema */}
-      <Script id="schema-services" type="application/ld+json" strategy="beforeInteractive">
+      <Script
+        id="schema-services"
+        type="application/ld+json"
+        strategy="beforeInteractive"
+      >
         {`
           {
             "@context": "https://schema.org",
@@ -203,17 +226,16 @@ export default function RootLayout({
       </Script>
 
       {/* Matomo Tag Manager */}
-<Script id="matomo-tagmanager" strategy="afterInteractive">
-  {`
-    var _mtm = window._mtm = window._mtm || [];
-    _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
-    (function() {
-      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-      g.async=true; g.src='https://admill.co.zw/analytics/js/container_Fg7DkXUJ.js';
-      s.parentNode.insertBefore(g,s);
-    })();
-  `}
-</Script>
+      <Script>
+        {`
+          var _mtm = window._mtm = window._mtm || [];
+          _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+          (function() {
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.async=true; g.src='https://admill.co.zw/matomo/js/container_Fg7DkXUJ.js'; s.parentNode.insertBefore(g,s);
+          })();
+        `}
+      </Script>
 
       {/* Tawk.to Live Chat Widget */}
       <Script id="tawk-to-widget" strategy="lazyOnload">
@@ -230,9 +252,9 @@ export default function RootLayout({
         `}
       </Script>
 
-
-
-      <body className={`${geistSans.variable} ${geistMono.variable} bg-black text-white font-sans tracking-wide`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} bg-black text-white font-sans tracking-wide`}
+      >
         {children}
       </body>
     </html>
