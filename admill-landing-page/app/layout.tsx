@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
+import SiteNavbar from "@/components/site-navbar";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,7 +15,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl = "https://www.admill.co.zw";
+const siteUrl = "https://admill.co.zw";
 const siteName = "Admill Systems";
 
 export const metadata: Metadata = {
@@ -43,7 +44,7 @@ export const metadata: Metadata = {
     title: "Admill Systems | Electrical, Automation & Building Systems Engineering",
     description:
       "Electrical engineering, energy systems, BMS, building automation, industrial control and electronic security integration in Zimbabwe.",
-    images: [{ url: "/hero-security.jpg", width: 1200, height: 630, alt: "Admill Systems engineering and systems integration" }],
+    images: [{ url: "/eng.jpg", alt: "Admill Systems engineering and systems integration" }],
     type: "website",
     url: siteUrl,
     siteName,
@@ -54,18 +55,16 @@ export const metadata: Metadata = {
     title: "Admill Systems | Engineering & Systems Integration",
     description:
       "Electrical, automation, BMS, energy and electronic security systems engineering in Zimbabwe.",
-    images: ["/hero-security.jpg"],
+    images: ["/eng.jpg"],
   },
   alternates: {
     canonical: "/",
   },
+  manifest: "/favicon/site.webmanifest",
   icons: {
     icon: [
       { url: "/favicon.ico" },
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
-      { url: "/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
+      { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
     ],
     apple: "/apple-touch-icon.png",
   },
@@ -107,12 +106,22 @@ export default function RootLayout({
         })}
       </Script>
 
+      <Script id="schema-website" type="application/ld+json" strategy="beforeInteractive">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: siteName,
+          url: siteUrl,
+          inLanguage: "en-ZW",
+        })}
+      </Script>
+
       <Script id="schema-local-business" type="application/ld+json" strategy="beforeInteractive">
         {JSON.stringify({
           "@context": "https://schema.org",
           "@type": ["LocalBusiness", "ProfessionalService"],
           name: siteName,
-          image: `${siteUrl}/hero-security.jpg`,
+          image: `${siteUrl}/eng.jpg`,
           address: {
             "@type": "PostalAddress",
             streetAddress: "Hogerty Hill",
@@ -175,13 +184,14 @@ export default function RootLayout({
           (function() {
             var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
             g.async=true;
-            g.src='https://admill.co.zw/matomo/js/container_Fg7DkXUJ.js';
+            g.src='${siteUrl}/matomo/js/container_Fg7DkXUJ.js';
             s.parentNode.insertBefore(g,s);
           })();
         `}
       </Script>
 
       <body className={`${geistSans.variable} ${geistMono.variable} bg-white text-neutral-900 font-sans`}>
+        <SiteNavbar />
         {children}
       </body>
     </html>
