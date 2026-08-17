@@ -1,984 +1,289 @@
 // app/page.js
 'use client';
 
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from 'framer-motion';
-import NextImage from 'next/image';
-import { FiShield, FiKey, FiBell, FiWifi, FiCloud, FiUserCheck, FiMenu, FiX, FiArrowUp } from 'react-icons/fi';
+import React, { useEffect, useState } from "react";
+import NextImage from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
+import { FiArrowRight, FiCheck, FiChevronDown, FiMenu, FiX } from "react-icons/fi";
 
-// Animation variants for staggered entrance
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-};
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
+const solutions = [
+  {
+    title: "Electrical Engineering",
+    text: "Power distribution, LV systems, backup power, generators, ATS and electrical infrastructure for demanding facilities.",
+    tags: ["LV Systems", "Generators", "ATS", "Power"]
   },
-};
+  {
+    title: "Power & Energy",
+    text: "Solar, energy monitoring and resilient power solutions designed around reliability, operating cost and continuity.",
+    tags: ["Solar", "Energy Monitoring", "Backup Power"]
+  },
+  {
+    title: "Building Automation & BMS",
+    text: "Integrated building control for HVAC, energy, lighting and critical services using open building protocols.",
+    tags: ["BMS", "BACnet", "KNX", "HVAC"]
+  },
+  {
+    title: "Industrial Automation",
+    text: "Control, monitoring and industrial communications for plants, production environments and critical processes.",
+    tags: ["PLC", "SCADA", "Instrumentation"]
+  },
+  {
+    title: "Electronic Security",
+    text: "CCTV, access control, intrusion detection and perimeter systems engineered as part of the wider facility infrastructure.",
+    tags: ["CCTV", "Access Control", "Intrusion"]
+  },
+  {
+    title: "Systems Integration",
+    text: "We connect independent electrical, mechanical, security and building systems into a coordinated operational environment.",
+    tags: ["Integration", "BACnet/IP", "Modbus", "IP"]
+  }
+];
 
-// FAQ Item Component
-function FAQItem({ question, answer, index }) {
-  const [isOpen, setIsOpen] = useState(false);
+const industries = [
+  ["Mining & Resources", "Resilient power, monitoring, security and automation for demanding operating environments."],
+  ["Manufacturing", "Electrical infrastructure, automation, controls and monitoring for production facilities."],
+  ["Commercial Buildings", "Integrated electrical, BMS, security and energy systems for modern facilities."],
+  ["Healthcare", "Critical power, life safety, security and building systems where reliability matters."],
+  ["Education", "Campus-wide power, connectivity, security, automation and monitoring solutions."],
+  ["Hospitality", "Guest safety, access, BMS and energy systems engineered around operational efficiency."]
+];
 
+const process = [
+  ["01", "Understand", "We define the operational problem, site constraints and project requirements."],
+  ["02", "Engineer", "We develop the system architecture, equipment selection and implementation approach."],
+  ["03", "Integrate", "Electrical, automation, security and building systems are designed to work together."],
+  ["04", "Commission", "We test, configure, commission and hand over a working system with the required documentation."],
+  ["05", "Support", "We provide ongoing maintenance, troubleshooting and lifecycle support."]
+];
+
+function FAQItem({ question, answer }) {
+  const [open, setOpen] = useState(false);
   return (
-    <motion.div
-      className="border border-border-light rounded-lg overflow-hidden bg-secondary-bg"
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.4, delay: index * 0.1 }}
-    >
+    <div className="border-b border-border-light">
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-primary-bg transition-colors duration-200"
+        type="button"
+        onClick={() => setOpen(!open)}
+        className="w-full py-5 flex items-center justify-between text-left font-semibold text-primary-text"
+        aria-expanded={open}
       >
-        <span className="font-semibold text-primary-text font-heading pr-4">{question}</span>
-        <motion.span
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3 }}
-          className="text-accent-red text-xl flex-shrink-0"
-        >
-          ▼
-        </motion.span>
+        <span>{question}</span>
+        <FiChevronDown className={`transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="overflow-hidden"
-          >
-            <div className="px-6 py-4 text-muted-text font-body border-t border-border-light">
-              {answer}
-            </div>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
+            <p className="pb-5 text-muted-text leading-relaxed">{answer}</p>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </div>
   );
 }
 
-// Mobile menu animation variants
-const mobileMenuVariants = {
-  hidden: { x: "100%" },
-  visible: { x: 0, transition: { type: "spring", stiffness: 120, damping: 20 } },
-  exit: { x: "100%", transition: { duration: 0.3 } },
-};
-
-// Scroll to top button animation variants
-const scrollToTopVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-  exit: { opacity: 0, y: 50, transition: { duration: 0.2 } },
-};
-
-
 export default function HomePage() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [showScrollToTop, setShowScrollToTop] = useState(false);
-  // Contact form anti-spam timestamp (used by backend to prevent instant submissions)
+  const [menuOpen, setMenuOpen] = useState(false);
   const [formTimestamp, setFormTimestamp] = useState(0);
   const [canSubmit, setCanSubmit] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
-  };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 300) {
-        setShowScrollToTop(true);
-      } else {
-        setShowScrollToTop(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  // Set the form timestamp on client mount so it's at least a few seconds before submit
   useEffect(() => {
     setFormTimestamp(Date.now());
+    const timer = setTimeout(() => setCanSubmit(true), 2500);
+    return () => clearTimeout(timer);
   }, []);
 
-  // Enable submit after 3 seconds to align with backend timing check
-  useEffect(() => {
-    const t = setTimeout(() => setCanSubmit(true), 3000);
-    return () => clearTimeout(t);
-  }, []);
+  const closeMenu = () => setMenuOpen(false);
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
-
-  return (
-    <>
-      {/* Main Navigation */}
-      <nav className="fixed top-0 left-0 w-full z-50 py-4 backdrop-blur-sm bg-primary-bg/90 border-b border-border-light shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 md:px-8 flex justify-between items-center">
-          {/* Logo Section */}
-          <div className="flex items-center">
-            <NextImage
-              src="/logo-02.png"
-              alt="Admill Systems - Electronic Security & IT Solutions Provider in Zimbabwe"
-              width={45}
-              height={40}
-              priority
-              className="h-10 w-auto"
-            />
-          </div>
-
-          {/* Desktop Navigation Links */}
-          <div className="hidden md:flex flex-1 justify-center space-x-4 lg:space-x-8 text-sm lg:text-base font-body">
-            <a href="#about" className="text-primary-text uppercase font-semibold hover:text-accent-red transition-colors duration-300">About</a>
-            <a href="#services" className="text-primary-text uppercase font-semibold hover:text-accent-red transition-colors duration-300">Solutions</a>
-            <a href="#clients" className="text-primary-text uppercase font-semibold hover:text-accent-red transition-colors duration-300">Clients</a>
-            <a href="#contact" className="text-primary-text uppercase font-semibold hover:text-accent-red transition-colors duration-300">Contact</a>
-          </div>
-
-          {/* Right-aligned Utility Links & CTA Button */}
-          <div className="hidden md:flex items-center space-x-4">
-            <a href="#" className="text-primary-text text-sm font-semibold hover:text-accent-red transition-colors duration-300">Login</a>
-            <a href="#contact" className="text-primary-text text-sm font-semibold hover:text-accent-red transition-colors duration-300">Support</a>
-            <a
-              href="#contact"
-              className="bg-accent-red text-primary-bg text-sm px-6 py-2 rounded-full font-semibold hover:bg-opacity-80 transition duration-300 shadow-md"
-            >
-              Free Assessment
-            </a>
-          </div>
-
-          {/* Mobile Menu Toggle (Hamburger/Close Icon) */}
-          <button
-            className="md:hidden text-primary-text text-3xl focus:outline-none"
-            onClick={toggleMobileMenu}
-            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-          >
-            {isMobileMenuOpen ? <FiX /> : <FiMenu />}
-          </button>
-        </div>
-      </nav>
-
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            className="fixed inset-0 bg-primary-bg/95 backdrop-blur-md z-40 flex flex-col items-center justify-center p-8 md:hidden"
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            variants={mobileMenuVariants}
-          >
-            <nav className="flex flex-col space-y-8 text-2xl font-body">
-              <a href="#about" className="text-primary-text hover:text-accent-red transition-colors duration-300" onClick={closeMobileMenu}>About</a>
-              <a href="#services" className="text-primary-text hover:text-accent-red transition-colors duration-300" onClick={closeMobileMenu}>Solutions</a>
-              <a href="#clients" className="text-primary-text hover:text-accent-red transition-colors duration-300" onClick={closeMobileMenu}>Clients</a>
-              <a href="#contact" className="text-primary-text hover:text-accent-red transition-colors duration-300" onClick={closeMobileMenu}>Contact</a>
-              <div className="border-t border-border-light pt-8 mt-8 flex flex-col space-y-4">
-                <a href="#" className="text-primary-text hover:text-accent-red transition-colors duration-300 text-lg" onClick={closeMobileMenu}>Login</a>
-                <a href="#contact" className="text-primary-text hover:text-accent-red transition-colors duration-300 text-lg" onClick={closeMobileMenu}>Support</a>
-                <a
-                  href="#contact"
-                  className="mt-4 bg-accent-red text-primary-bg text-lg px-6 py-3 rounded-full font-semibold hover:bg-opacity-80 transition duration-300 shadow-md self-center"
-                  onClick={closeMobileMenu}
-                >
-                  Free Assessment
-                </a>
-              </div>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-
-      {/* Main content area */}
-      <main className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden pt-[80px]"> {/* Compensates for fixed navbar */}
-        {/* Hero Video/Image Background Container */}
-        <div className="absolute inset-0 w-full h-full">
-          <video
-            className="w-full h-full object-cover"
-            src="/security-hero.mp4"
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            poster="/hero-security.jpg"
-          >
-            Your browser does not support the video tag.
-          </video>
-          {/* Much Lighter Overlay for Text Readability */}
-          <div className="absolute inset-0 bg-primary-bg/70"></div>
-        </div>
-
-        {/* Hero Section Content Overlay */}
-        <motion.div
-          className="relative z-10 text-center px-6 py-16 md:py-24 max-w-4xl"
-          initial="hidden"
-          animate="visible"
-          variants={containerVariants}
-        >
-          <motion.h1
-            className="text-4xl sm:text-6xl font-bold leading-tight mb-6 text-primary-text font-heading"
-            variants={fadeInUp}
-          >
-            <span className="text-accent-red">Holistic Electronic Engineering Solutions.</span> <br />
-            Security • Integration • Building Management
-          </motion.h1>
-          <motion.p
-            className="text-lg md:text-xl text-muted-text mb-4 max-w-2xl mx-auto font-body"
-            variants={fadeInUp}
-          >
-            Award-winning security, systems integration, and BMS solutions trusted by 200+ organizations across Zimbabwe.
-          </motion.p>
-          <motion.p
-            className="text-base md:text-lg text-primary-bg bg-accent-red/90 inline-block px-6 py-2 rounded-full mb-8 font-semibold"
-            variants={fadeInUp}
-          >
-            ✓ 15+ Years Experience  ✓ Systems Integration  ✓ 24/7 Support
-          </motion.p>
-          <motion.div className="flex flex-col sm:flex-row justify-center gap-4" variants={fadeInUp}>
-            <motion.a
-              href="#contact"
-              className="inline-block bg-accent-red text-primary-bg text-lg md:text-xl font-semibold px-8 py-3 rounded-full hover:bg-opacity-80 transition duration-300 shadow-lg"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Get Free Security Assessment
-            </motion.a>
-            <motion.a
-              href="#services"
-              className="inline-block border-2 border-primary-text text-primary-text text-lg md:text-xl px-8 py-3 rounded-full hover:bg-primary-text hover:text-primary-bg transition duration-300 font-semibold"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Explore Solutions
-            </motion.a>
-          </motion.div>
-        </motion.div>
-      </main>
-
-      {/* About Section - Image Refined */}
-      <section id="about" className="bg-primary-bg py-20 px-6">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          {/* Left Column: Replaced with NextImage */}
-          <motion.div
-            className="relative w-full h-64 md:h-96 rounded-lg overflow-hidden" // Added relative and overflow-hidden
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
-          >
-            <NextImage
-              // NEW IMAGE URL
-              src="/eng.jpg
-              "
-              alt="Professional security engineer installing advanced CCTV surveillance system"
-              fill // Use fill to make image cover container
-              style={{ objectFit: 'cover' }} // object-fit: cover
-              sizes="(max-width: 768px) 100vw, 50vw" // Responsive image sizing
-              priority // Or lazy if not in viewport initially
-              className="rounded-lg" // Ensure image itself is rounded
-            />
-          </motion.div>
-
-          {/* Right Column: Text Content */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl sm:text-4xl font-bold text-accent-red mb-6 font-heading">Engineering Excellence Since 2017</h2>
-            <p className="text-primary-text text-lg leading-relaxed mb-4 font-body">
-              Admill Systems is Zimbabwe's leading provider of holistic electronic engineering solutions. We combine security systems, IT infrastructure, and building automation to create intelligent, integrated environments.
-            </p>
-            <p className="text-muted-text leading-relaxed mb-6 font-body">
-              From consultation and custom system design to seamless installation and ongoing support, we deliver complete solutions that work together. Our expertise spans CCTV surveillance, access control, network infrastructure, and Building Management Systems (BMS) – all integrated into cohesive ecosystems that enhance security, efficiency, and control.
-            </p>
-
-            {/* Trust Badges */}
-            <div className="grid grid-cols-2 gap-4 mt-8">
-              <div className="flex items-center space-x-3 bg-secondary-bg p-4 rounded-lg border border-border-light">
-                <div className="text-accent-red text-3xl">🏆</div>
-                <div>
-                  <p className="font-semibold text-primary-text text-sm">ISO Certified</p>
-                  <p className="text-xs text-muted-text">Quality Management</p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-3 bg-secondary-bg p-4 rounded-lg border border-border-light">
-                <div className="text-accent-red text-3xl">🤝</div>
-                <div>
-                  <p className="font-semibold text-primary-text text-sm">Authorized Partner</p>
-                  <p className="text-xs text-muted-text">Hikvision & Honeywell</p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-3 bg-secondary-bg p-4 rounded-lg border border-border-light">
-                <div className="text-accent-red text-3xl">⚡</div>
-                <div>
-                  <p className="font-semibold text-primary-text text-sm">Systems Integration</p>
-                  <p className="text-xs text-muted-text">Multi-platform expertise</p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-3 bg-secondary-bg p-4 rounded-lg border border-border-light">
-                <div className="text-accent-red text-3xl">✓</div>
-                <div>
-                  <p className="font-semibold text-primary-text text-sm">15+ Years</p>
-                  <p className="text-xs text-muted-text">Engineering Excellence</p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Services Section */}
-      <section id="services" className="bg-secondary-bg py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center text-accent-red mb-12 font-heading">Comprehensive Solutions</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {[
-              { id: 1, title: "Smart Surveillance", desc: "AI-powered CCTV with facial recognition, remote access & analytics.", icon: <FiShield />, pricing: "Custom Quote" },
-              { id: 2, title: "Access Control", desc: "Biometric, RFID, and card-based systems for secure entry.", icon: <FiKey />, pricing: "Custom Quote" },
-              { id: 3, title: "Intrusion Detection", desc: "Silent alarm systems with 24/7 monitoring for critical sites.", icon: <FiBell />, pricing: "Custom Quote" },
-              { id: 4, title: "Building Management Systems", desc: "Integrated BMS for HVAC, lighting, energy, and environmental control.", icon: <FiCloud />, pricing: "Custom Quote" },
-              { id: 5, title: "Systems Integration", desc: "Multi-system integration connecting security, IT, and building automation.", icon: <FiWifi />, pricing: "Custom Quote" },
-              { id: 6, title: "Workforce Management", desc: "Biometric attendance tracking with portable rugged devices.", icon: <FiUserCheck />, pricing: "Custom Quote" }
-            ].map((item, idx) => (
-              <motion.div
-                key={item.id}
-                className="bg-primary-bg p-8 rounded-xl shadow-md border border-border-light hover:shadow-xl hover:scale-[1.03] transition-all duration-300 flex flex-col items-start"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-              >
-                <div className="text-4xl text-accent-red mb-4">
-                  {item.icon}
-                </div>
-                <h3 className="text-xl font-semibold mb-2 text-primary-text font-heading">{item.title}</h3>
-                <p className="text-base text-muted-text leading-relaxed mb-4 flex-grow font-body">{item.desc}</p>
-                <div className="w-full border-t border-border-light pt-4 mt-2">
-                  <p className="text-sm text-accent-red font-semibold mb-3">{item.pricing}</p>
-                  <a
-                    href="#contact"
-                    className="inline-block text-sm bg-accent-red text-primary-bg px-4 py-2 rounded-full hover:bg-opacity-90 transition-colors duration-300 font-semibold"
-                  >
-                    Get Quote →
-                  </a>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Integration & BMS Capabilities Section - NEW */}
-      <section className="bg-primary-bg py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <motion.h2
-            className="text-3xl sm:text-4xl font-bold text-center text-accent-red mb-6 font-heading"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
-          >
-            Complete Systems Integration
-          </motion.h2>
-          <motion.p
-            className="text-center text-primary-text text-lg mb-12 max-w-3xl mx-auto font-body"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            We don't just install systems — we integrate them. Our holistic approach connects security, IT, and building automation into unified, intelligent ecosystems.
-          </motion.p>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Building Management Systems */}
-            <motion.div
-              className="bg-secondary-bg p-8 rounded-xl border border-border-light"
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="text-4xl text-accent-red mb-4">🏢</div>
-              <h3 className="text-2xl font-bold text-primary-text mb-4 font-heading">Building Management Systems (BMS)</h3>
-              <p className="text-muted-text mb-4 font-body leading-relaxed">
-                Centralized control and monitoring of your building's mechanical and electrical systems. Our BMS solutions optimize energy efficiency, enhance comfort, and reduce operational costs.
-              </p>
-              <ul className="space-y-2 text-primary-text font-body">
-                <li className="flex items-start">
-                  <span className="text-accent-red mr-2">✓</span>
-                  <span>HVAC control and optimization</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-accent-red mr-2">✓</span>
-                  <span>Lighting automation and energy management</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-accent-red mr-2">✓</span>
-                  <span>Environmental monitoring (temperature, humidity, air quality)</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-accent-red mr-2">✓</span>
-                  <span>Power monitoring and load management</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-accent-red mr-2">✓</span>
-                  <span>Real-time dashboards and remote access</span>
-                </li>
-              </ul>
-            </motion.div>
-
-            {/* Systems Integration */}
-            <motion.div
-              className="bg-secondary-bg p-8 rounded-xl border border-border-light"
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="text-4xl text-accent-red mb-4">🔗</div>
-              <h3 className="text-2xl font-bold text-primary-text mb-4 font-heading">Multi-System Integration</h3>
-              <p className="text-muted-text mb-4 font-body leading-relaxed">
-                Break down silos between security, IT, and building systems. We create cohesive environments where all systems communicate and work together seamlessly.
-              </p>
-              <ul className="space-y-2 text-primary-text font-body">
-                <li className="flex items-start">
-                  <span className="text-accent-red mr-2">✓</span>
-                  <span>Security + BMS integration (access control triggers lighting, HVAC)</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-accent-red mr-2">✓</span>
-                  <span>Unified dashboards across multiple platforms</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-accent-red mr-2">✓</span>
-                  <span>Protocol bridging (BACnet, Modbus, SNMP, API integration)</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-accent-red mr-2">✓</span>
-                  <span>Legacy system modernization and integration</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-accent-red mr-2">✓</span>
-                  <span>IoT device integration and smart building automation</span>
-                </li>
-              </ul>
-            </motion.div>
-          </div>
-
-          {/* Integration Benefits */}
-          <motion.div
-            className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <div className="bg-accent-red/10 border border-accent-red/30 p-6 rounded-lg text-center">
-              <div className="text-3xl font-bold text-accent-red mb-2 font-heading">30-50%</div>
-              <p className="text-primary-text font-semibold font-body">Energy Savings</p>
-              <p className="text-sm text-muted-text mt-2">Through optimized BMS control</p>
-            </div>
-            <div className="bg-accent-red/10 border border-accent-red/30 p-6 rounded-lg text-center">
-              <div className="text-3xl font-bold text-accent-red mb-2 font-heading">Single Pane</div>
-              <p className="text-primary-text font-semibold font-body">Unified Control</p>
-              <p className="text-sm text-muted-text mt-2">Manage all systems from one dashboard</p>
-            </div>
-            <div className="bg-accent-red/10 border border-accent-red/30 p-6 rounded-lg text-center">
-              <div className="text-3xl font-bold text-accent-red mb-2 font-heading">24/7</div>
-              <p className="text-primary-text font-semibold font-body">Automated Response</p>
-              <p className="text-sm text-muted-text mt-2">Intelligent systems that self-optimize</p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Featured Projects / Case Studies Section - Images Refined */}
-      <section className="bg-primary-bg py-20 px-6">
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-accent-red mb-12 font-heading">Our Featured Work</h2>
-          <p className="text-primary-text text-lg leading-relaxed mb-10 max-w-2xl mx-auto font-body">
-            Explore how Admill Systems has delivered cutting-edge security and IT solutions for diverse clients and complex challenges.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <motion.div
-              className="bg-secondary-bg rounded-xl shadow-md border border-border-light overflow-hidden hover:shadow-lg transition-shadow duration-300"
-              initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ delay: 0.1 }}
-            >
-              <div className="relative w-full h-48">
-                <NextImage
-                  // NEW IMAGE URL
-                  src="turn.png"
-                  alt="Large commercial complex with integrated CCTV surveillance and access control systems by Admill Systems"
-                  fill
-                  style={{ objectFit: 'cover' }}
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-              </div>
-              <div className="p-6 text-left">
-                <h3 className="text-xl font-semibold text-primary-text mb-2 font-heading">Large Commercial Complex</h3>
-                <p className="text-muted-text text-sm mb-4">Integrated CCTV, access control, and network infrastructure.</p>
-                <a href="#" className="text-accent-red font-semibold hover:underline">View Case Study &rarr;</a>
-              </div>
-            </motion.div>
-            <motion.div
-              className="bg-secondary-bg rounded-xl shadow-md border border-border-light overflow-hidden hover:shadow-lg transition-shadow duration-300"
-              initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ delay: 0.2 }}
-            >
-              <div className="relative w-full h-48">
-                <NextImage
-                  // NEW IMAGE URL
-                  src="board.webp"
-                  alt="Government ministry building secured with biometric access control and alarm systems installed by Admill"
-                  fill
-                  style={{ objectFit: 'cover' }}
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-              </div>
-              <div className="p-6 text-left">
-                <h3 className="text-xl font-semibold text-primary-text mb-2 font-heading">Government Ministry Security Upgrade</h3>
-                <p className="text-muted-text text-sm mb-4">High-level biometric access and alarm system deployment.</p>
-                <a href="#" className="text-accent-red font-semibold hover:underline">View Case Study &rarr;</a>
-              </div>
-            </motion.div>
-            <motion.div
-              className="bg-secondary-bg rounded-xl shadow-md border border-border-light overflow-hidden hover:shadow-lg transition-shadow duration-300"
-              initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ delay: 0.3 }}
-            >
-              <div className="relative w-full h-48">
-                <NextImage
-                  // NEW IMAGE URL
-                  src="mtgs.jpg"
-                  alt="Educational campus with comprehensive network infrastructure and structured cabling by Admill Systems"
-                  fill
-                  style={{ objectFit: 'cover' }}
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-              </div>
-              <div className="p-6 text-left">
-                <h3 className="text-xl font-semibold text-primary-text mb-2 font-heading">Educational Campus Network</h3>
-                <p className="text-muted-text text-sm mb-4">Comprehensive campus-wide network infrastructure overhaul.</p>
-                <a href="#" className="text-accent-red font-semibold hover:underline">View Case Study &rarr;</a>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats/Metrics Section */}
-      <section className="bg-accent-red py-16 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-primary-bg">
-            {[
-              { value: "15+", label: "Years in Business" },
-              { value: "500+", label: "Projects Completed" },
-              { value: "200+", label: "Happy Clients" },
-              { value: "99.8%", label: "Uptime Guarantee" }
-            ].map((stat, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, scale: 0.5 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-              >
-                <div className="text-4xl md:text-5xl font-bold mb-2 font-heading">{stat.value}</div>
-                <div className="text-lg font-body opacity-90">{stat.label}</div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Clients Section */}
-      <section id="clients" className="bg-primary-bg px-6 py-20 max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl sm:text-4xl font-bold text-accent-red mb-10 font-heading">Trusted By Leading Organizations</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 text-primary-text text-lg font-body">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ delay: 0.1 }}>New Life Covenant Church</motion.div>
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ delay: 0.2 }}>Government Ministries</motion.div>
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ delay: 0.3 }}>Mother Touch Schools</motion.div>
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ delay: 0.4 }}>Kefalos / Ironblock</motion.div>
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ delay: 0.5 }}>Kingswood Contracting</motion.div>
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ delay: 0.6 }}>Residential Estates</motion.div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="bg-secondary-bg py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <motion.h2
-            className="text-3xl sm:text-4xl font-bold text-center text-accent-red mb-12 font-heading"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
-          >
-            What Our Clients Say
-          </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Saul Murira",
-                role: "Technical Supervisor",
-                company: "Kingswood Contracting",
-                quote: "Admill Systems transformed our site security with state-of-the-art CCTV and access control. Their professionalism and technical expertise are unmatched.",
-                rating: 5
-              },
-              {
-                name: "Pastor John Sibanda",
-                role: "Senior Pastor",
-                company: "Religious Organization",
-                quote: "The biometric attendance system has streamlined our operations significantly. The team was courteous, efficient, and delivered beyond expectations.",
-                rating: 5
-              },
-              {
-                name: "Mrs. J. Matengu",
-                role: "School Administrator",
-                company: "Mother Touch Schools",
-                quote: "Our campus network infrastructure is now world-class thanks to Admill. Students and staff enjoy seamless connectivity across all buildings.",
-                rating: 5
-              }
-            ].map((testimonial, idx) => (
-              <motion.div
-                key={idx}
-                className="bg-primary-bg p-8 rounded-xl shadow-md border border-border-light"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-              >
-                <div className="flex mb-3">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <span key={i} className="text-accent-red text-xl">★</span>
-                  ))}
-                </div>
-                <p className="text-primary-text italic mb-6 font-body leading-relaxed">
-                  "{testimonial.quote}"
-                </p>
-                <div className="border-t border-border-light pt-4">
-                  <p className="font-semibold text-primary-text font-heading">{testimonial.name}</p>
-                  <p className="text-sm text-muted-text">{testimonial.role}</p>
-                  <p className="text-sm text-accent-red font-semibold">{testimonial.company}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="bg-primary-bg py-20 px-6">
-        <div className="max-w-4xl mx-auto">
-          <motion.h2
-            className="text-3xl sm:text-4xl font-bold text-center text-accent-red mb-12 font-heading"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
-          >
-            Frequently Asked Questions
-          </motion.h2>
-          <div className="space-y-4">
-            {[
-              {
-                q: "How long does a typical security system installation take?",
-                a: "Installation timeframes vary based on project scope. A standard residential system takes 1-2 days, while commercial installations typically require 3-7 days. We provide detailed timelines during our free consultation."
-              },
-              {
-                q: "Do you offer 24/7 monitoring and support?",
-                a: "Yes! Our cloud monitoring service provides 24/7 system health diagnostics with real-time alerts. We also offer dedicated technical support during business hours and emergency response for critical issues."
-              },
-              {
-                q: "What brands and technologies do you use?",
-                a: "We work with industry-leading brands including Hikvision, Dahua, ZKTeco, Mikrotik, and Ubiquiti. We select equipment based on your specific needs, ensuring reliability and future-proof technology."
-              },
-              {
-                q: "Can I access my security system remotely?",
-                a: "Absolutely. All our modern systems include mobile app access, allowing you to view live feeds, control access points, and receive alerts from anywhere in the world via smartphone or computer."
-              },
-              {
-                q: "What maintenance is required for security systems?",
-                a: "We recommend quarterly inspections for commercial systems and bi-annual checks for residential installations. We offer flexible maintenance contracts that include cleaning, software updates, and component testing."
-              },
-              {
-                q: "Do you provide warranties and guarantees?",
-                a: "Yes. All installations include a 12-month workmanship warranty. Equipment comes with manufacturer warranties ranging from 2-5 years. We also offer extended warranty packages for added peace of mind."
-              }
-            ].map((faq, idx) => (
-              <FAQItem key={idx} question={faq.q} answer={faq.a} index={idx} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Dedicated Call to Action Section */}
-      <section className="bg-accent-red py-20 px-6 text-primary-bg text-center">
-        <motion.div
-          className="max-w-4xl mx-auto"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-6 font-heading">Ready to Secure Your Future?</h2>
-          <p className="text-lg md:text-xl mb-10 font-body">
-            Connect with Admill Systems today to discuss your unique security and IT needs.
-          </p>
-          <a
-            href="#contact"
-            className="inline-block bg-primary-bg text-accent-red text-xl font-semibold px-10 py-4 rounded-full hover:bg-opacity-90 transition duration-300 shadow-lg"
-          >
-            Get a Free Consultation
-          </a>
-        </motion.div>
-      </section>
-
-      {/* Contact Section - Map Placeholder comment added */}
-      <section id="contact" className="bg-secondary-bg px-6 py-20">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl sm:text-4xl font-bold text-accent-red mb-6 font-heading">Get in Touch</h2>
-            <p className="text-primary-text mb-6 font-body">
-              We're here to help you design and implement the perfect security solution. Reach out to our team:
-            </p>
-            <div className="space-y-4 text-primary-text font-body">
-              <p><strong>Email:</strong> <a href="mailto:info@admill.co.zw" className="text-accent-red hover:underline">info@admill.co.zw</a></p>
-              <p><strong>Phone:</strong> <a href="tel:+263715017744" className="text-accent-red hover:underline">+263 715 017 744</a></p>
-              <p><strong>Address:</strong> Hogerty Hill, Harare, Zimbabwe</p>
-              <p><strong>Office Hours:</strong> Mon-Fri, 9 AM - 5 PM CAT</p>
-              {/* For the map, you would typically embed a Google Maps iframe or use a React map library. */}
-              {/* Example: <iframe src="YOUR_Maps_EMBED_URL" width="100%" height="250" style="border:0;" allowFullScreen="" loading="lazy"></iframe> */}
-              <div className="w-full h-48 bg-muted-text/10 rounded-lg flex items-center justify-center text-muted-text mt-6">ADMILL</div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h3 className="text-2xl font-bold text-primary-text mb-6 font-heading">Send Us a Message</h3>
-            <form
-  className="grid gap-4 text-left"
-  onSubmit={async (e) => {
-    e.preventDefault();
-
-    const form = e.currentTarget;
-    const name = form.name.value.trim();
-    const email = form.email.value.trim();
-    const message = form.message.value.trim();
-    const honeypot = form.honeypot.value;
-    const timestamp = form.timestamp.value || String(formTimestamp);
-
-    console.log("📩 Submitting form:", { name, email, message });
-
-    // Track event in Matomo
-    if (typeof window !== "undefined" && window._mtm) {
-      window._mtm.push({
-        event: "formSubmission",
-        formName: "Contact Form",
-      });
-      console.log("✅ Matomo tracking sent");
-    }
+  async function submitForm(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const data = {
+      name: form.name.value.trim(),
+      email: form.email.value.trim(),
+      company: form.company.value.trim(),
+      phone: form.phone.value.trim(),
+      projectType: form.projectType.value,
+      projectLocation: form.projectLocation.value.trim(),
+      projectStage: form.projectStage.value,
+      message: form.message.value.trim(),
+      honeypot: form.honeypot.value,
+      timestamp: form.timestamp.value
+    };
 
     setIsSubmitting(true);
     try {
-      // POST to Node.js API server (proxied by nginx at /api/)
-      const apiUrl = "https://admill.co.zw/api/contact";
-      console.log("🌐 Sending request to:", apiUrl);
-
-      // POST to your server's API folder
-      const res = await fetch(apiUrl, {
+      const response = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify({ name, email, message, honeypot, timestamp }),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(data)
       });
-
-      console.log("📡 Response status:", res.status);
-
-      // Try to parse response
-      let responseData;
-      try {
-        responseData = await res.json();
-        console.log("📦 Response data:", responseData);
-      } catch (parseError) {
-        console.warn("⚠️ Could not parse JSON response:", parseError);
-        const textResponse = await res.text();
-        console.log("📄 Raw response:", textResponse);
-      }
-
-      if (res.ok) {
-        alert("✅ Your message has been sent.");
-        e.target.reset();
-      } else {
-        console.error("❌ Server error:", res.status, responseData);
-        alert(`❌ Failed to send your message. Server returned: ${res.status}`);
-      }
-    } catch (err) {
-      console.error("🔥 Error submitting form:", err);
-      console.error("Error details:", {
-        message: err.message,
-        name: err.name,
-        stack: err.stack
-      });
-      alert(`⚠️ Error sending your message: ${err.message}`);
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.error || "Unable to send enquiry.");
+      alert("Your project enquiry has been sent. Our team will be in touch.");
+      form.reset();
+    } catch (error) {
+      console.error(error);
+      alert(error.message || "Unable to send enquiry right now.");
     } finally {
       setIsSubmitting(false);
     }
-  }}
->
-  {/* Honeypot and timing fields for spam prevention */}
-  <input
-    type="text"
-    name="honeypot"
-    tabIndex={-1}
-    autoComplete="off"
-    className="hidden"
-    aria-hidden="true"
-  />
-  <input type="hidden" name="timestamp" value={formTimestamp} />
+  }
 
-  <input
-    type="text"
-    name="name"
-    minLength={2}
-    maxLength={50}
-    placeholder="Your Name"
-    required
-    className="bg-primary-bg border border-border-light px-4 py-3 rounded-md text-primary-text placeholder-muted-text w-full focus:outline-none focus:ring-2 focus:ring-accent-red"
-  />
-  <input
-    type="email"
-    name="email"
-    placeholder="Your Email"
-    required
-    className="bg-primary-bg border border-border-light px-4 py-3 rounded-md text-primary-text placeholder-muted-text w-full focus:outline-none focus:ring-2 focus:ring-accent-red"
-  />
-  <textarea
-    name="message"
-    minLength={10}
-    maxLength={1000}
-    placeholder="Message"
-    rows="5"
-    required
-    className="bg-primary-bg border border-border-light px-4 py-3 rounded-md text-primary-text placeholder-muted-text w-full focus:outline-none focus:ring-2 focus:ring-accent-red"
-  ></textarea>
-  <button
-    type="submit"
-    disabled={!canSubmit || isSubmitting}
-    aria-disabled={!canSubmit || isSubmitting}
-    className={`bg-accent-red transition-colors duration-300 px-8 py-3 rounded-full text-primary-bg font-semibold shadow-lg ${(!canSubmit || isSubmitting) ? 'opacity-60 cursor-not-allowed' : 'hover:bg-opacity-80'}`}
-  >
-    {isSubmitting ? 'Sending…' : (!canSubmit ? 'Please wait…' : 'Send Message')}
-  </button>
-</form>
-
-          </motion.div>
+  return (
+    <div className="bg-primary-bg text-primary-text">
+      <header className="fixed top-0 left-0 right-0 z-50 border-b border-border-light bg-primary-bg/95 backdrop-blur">
+        <div className="max-w-7xl mx-auto px-5 lg:px-8 h-20 flex items-center justify-between">
+          <a href="#top" aria-label="Admill Systems home">
+            <NextImage src="/logo-02.png" alt="Admill Systems" width={58} height={48} priority className="h-11 w-auto" />
+          </a>
+          <nav className="hidden lg:flex items-center gap-8 text-sm font-semibold">
+            <a href="#solutions" className="hover:text-accent-red">Solutions</a>
+            <a href="#industries" className="hover:text-accent-red">Industries</a>
+            <a href="#projects" className="hover:text-accent-red">Projects</a>
+            <a href="#approach" className="hover:text-accent-red">Engineering</a>
+            <a href="#contact" className="hover:text-accent-red">Contact</a>
+          </nav>
+          <a href="#contact" className="hidden md:inline-flex bg-accent-red text-white px-6 py-3 rounded-full font-semibold hover:opacity-90">Discuss a Project</a>
+          <button type="button" className="lg:hidden text-2xl" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
+            {menuOpen ? <FiX /> : <FiMenu />}
+          </button>
         </div>
-      </section>
+        <AnimatePresence>
+          {menuOpen && (
+            <motion.nav initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="lg:hidden border-t border-border-light bg-primary-bg px-6 py-6 flex flex-col gap-5 font-semibold">
+              {["solutions", "industries", "projects", "approach", "contact"].map((item) => (
+                <a key={item} href={`#${item}`} onClick={closeMenu} className="capitalize">{item}</a>
+              ))}
+              <a href="#contact" onClick={closeMenu} className="bg-accent-red text-white text-center px-5 py-3 rounded-full">Discuss a Project</a>
+            </motion.nav>
+          )}
+        </AnimatePresence>
+      </header>
 
-      {/* Footer */}
-      <footer className="bg-primary-bg text-primary-text py-12 px-6 border-t border-border-light">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="flex flex-col items-start">
-            <NextImage
-              src="/logo-02.png"
-              alt="Admill Systems - Trusted Security Solutions Provider in Zimbabwe"
-              width={60}
-              height={50}
-              className="mb-4"
-            />
-            <p className="text-sm text-muted-text mb-2 font-body">
-              Innovating security and IT solutions for a connected world.
-            </p>
-            <p className="text-sm text-muted-text font-body">
-              &copy; {new Date().getFullYear()} Admill Systems.
-            </p>
+      <main id="top">
+        <section className="relative min-h-[760px] pt-20 flex items-center overflow-hidden">
+          <div className="absolute inset-0">
+            <video className="w-full h-full object-cover" src="/security-hero.mp4" autoPlay loop muted playsInline preload="metadata" poster="/hero-security.jpg" aria-hidden="true" />
+            <div className="absolute inset-0 bg-white/85 md:bg-white/78" />
           </div>
-
-          <div>
-            <h4 className="font-semibold text-primary-text mb-4 font-heading">Quick Links</h4>
-            <ul className="space-y-2 text-sm font-body">
-              <li><a href="#about" className="hover:text-accent-red transition-colors duration-300">About Us</a></li>
-              <li><a href="#services" className="hover:text-accent-red transition-colors duration-300">Our Solutions</a></li>
-              <li><a href="#clients" className="hover:text-accent-red transition-colors duration-300">Our Clients</a></li>
-              <li><a href="#" className="hover:text-accent-red transition-colors duration-300">Insights</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-semibold text-primary-text mb-4 font-heading">Contact</h4>
-            <ul className="space-y-2 text-sm font-body">
-              <li><a href="mailto:info@admill.co.zw" className="hover:text-accent-red transition-colors duration-300">info@admill.co.zw</a></li>
-              <li><a href="tel:+263784319436" className="hover:text-accent-red transition-colors duration-300">+263 715 017 744</a></li>
-              <li>Hogerty Hill</li>
-              <li>Harare, Zimbabwe</li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-semibold text-primary-text mb-4 font-heading">Connect With Us</h4>
-            <div className="flex space-x-4 text-primary-text text-2xl">
-              <a href="#" aria-label="LinkedIn" className="hover:text-accent-red transition-colors duration-300">in</a>
-              <a href="#" aria-label="Facebook" className="hover:text-accent-red transition-colors duration-300">fb</a>
-              <a href="#" aria-label="Twitter" className="hover:text-accent-red transition-colors duration-300">tw</a>
+          <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-24 w-full">
+            <div className="max-w-4xl">
+              <p className="text-accent-red font-bold uppercase tracking-[0.22em] text-sm mb-6">Electrical • Automation • Building Systems • Integration</p>
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.02] tracking-tight mb-7">
+                Engineering the systems behind <span className="text-accent-red">resilient, intelligent facilities.</span>
+              </h1>
+              <p className="text-xl lg:text-2xl text-muted-text max-w-3xl leading-relaxed mb-9">
+                Admill Systems designs, integrates and commissions electrical, energy, building automation, industrial control and electronic security systems for commercial, industrial and institutional facilities in Zimbabwe.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 mb-10">
+                <a href="#contact" className="inline-flex justify-center items-center gap-2 bg-accent-red text-white px-8 py-4 rounded-full font-bold text-lg hover:opacity-90">Discuss a Project <FiArrowRight /></a>
+                <a href="#projects" className="inline-flex justify-center items-center gap-2 border border-primary-text px-8 py-4 rounded-full font-bold text-lg hover:bg-primary-text hover:text-white">View Our Work</a>
+              </div>
+              <div className="flex flex-wrap gap-x-7 gap-y-3 text-sm font-semibold">
+                {['Design & Engineering', 'Systems Integration', 'Testing & Commissioning', 'Lifecycle Support'].map(item => <span key={item} className="flex items-center gap-2"><FiCheck className="text-accent-red" />{item}</span>)}
+              </div>
             </div>
           </div>
-        </div>
-        <div className="mt-8 text-center text-xs text-muted-text font-body">
-          Designed for a secure world.
-        </div>
-      </footer>
+        </section>
 
-      {/* Scroll to Top Button */}
-      <AnimatePresence>
-        {showScrollToTop && (
-          <motion.button
-            className="fixed bottom-6 right-6 bg-accent-red text-primary-bg p-4 rounded-full shadow-lg z-50 focus:outline-none focus:ring-2 focus:ring-accent-red focus:ring-offset-2 focus:ring-offset-primary-bg"
-            onClick={scrollToTop}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            variants={scrollToTopVariants}
-            aria-label="Scroll to top"
-          >
-            <FiArrowUp className="text-2xl" />
-          </motion.button>
-        )}
-      </AnimatePresence>
-    </>
+        <section className="border-y border-border-light bg-secondary-bg py-14">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8 grid md:grid-cols-3 gap-10">
+            <div><p className="text-accent-red font-bold uppercase tracking-widest text-xs mb-2">Engineering partner</p><h2 className="text-2xl font-bold">One partner across multiple systems.</h2></div>
+            <p className="text-muted-text leading-relaxed">Complex facilities rarely have one problem. Power, controls, security, HVAC, networking and monitoring have to operate together. Our role is to engineer that relationship.</p>
+            <p className="text-muted-text leading-relaxed">From a new installation to an existing facility upgrade, we focus on reliable infrastructure, clear documentation and commissioning—not simply equipment installation.</p>
+          </div>
+        </section>
+
+        <section id="solutions" className="py-24">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="max-w-3xl mb-14"><p className="text-accent-red font-bold uppercase tracking-widest text-sm mb-3">Core capabilities</p><h2 className="text-4xl lg:text-5xl font-bold mb-5">Engineering solutions built around the facility.</h2><p className="text-lg text-muted-text">We combine electrical, electronic and control disciplines to deliver infrastructure that is designed to work as a system.</p></div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-border-light border border-border-light">
+              {solutions.map((solution) => (
+                <article key={solution.title} className="bg-primary-bg p-8 lg:p-9 hover:bg-secondary-bg transition-colors">
+                  <div className="w-10 h-1 bg-accent-red mb-7" />
+                  <h3 className="text-2xl font-bold mb-4">{solution.title}</h3>
+                  <p className="text-muted-text leading-relaxed mb-7">{solution.text}</p>
+                  <div className="flex flex-wrap gap-2">{solution.tags.map(tag => <span key={tag} className="text-xs font-semibold border border-border-light px-3 py-1.5 rounded-full">{tag}</span>)}</div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="industries" className="bg-primary-text text-white py-24">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="max-w-3xl mb-14"><p className="text-accent-red font-bold uppercase tracking-widest text-sm mb-3">Industries</p><h2 className="text-4xl lg:text-5xl font-bold mb-5">Built for environments where reliability matters.</h2><p className="text-white/65 text-lg">Our approach adapts to the operational, safety and continuity requirements of each facility.</p></div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+              {industries.map(([title, text]) => <article key={title} className="border-t border-white/20 pt-6"><h3 className="text-xl font-bold mb-3">{title}</h3><p className="text-white/60 leading-relaxed">{text}</p></article>)}
+            </div>
+          </div>
+        </section>
+
+        <section id="approach" className="py-24 bg-secondary-bg">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="max-w-3xl mb-14"><p className="text-accent-red font-bold uppercase tracking-widest text-sm mb-3">Engineering approach</p><h2 className="text-4xl lg:text-5xl font-bold mb-5">From concept to commissioning.</h2><p className="text-lg text-muted-text">The value is not only in the equipment. It is in the engineering, integration and commissioning that makes the complete installation dependable.</p></div>
+            <div className="grid md:grid-cols-5 gap-px bg-border-light border border-border-light">
+              {process.map(([number, title, text]) => <div key={number} className="bg-primary-bg p-7"><span className="text-accent-red font-bold text-sm">{number}</span><h3 className="text-xl font-bold mt-5 mb-3">{title}</h3><p className="text-sm text-muted-text leading-relaxed">{text}</p></div>)}
+            </div>
+          </div>
+        </section>
+
+        <section id="projects" className="py-24">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14"><div><p className="text-accent-red font-bold uppercase tracking-widest text-sm mb-3">Project evidence</p><h2 className="text-4xl lg:text-5xl font-bold">Show the engineering. Not just the equipment.</h2></div><p className="max-w-xl text-muted-text leading-relaxed">We are building a technical project library covering the scope, technologies, challenges and outcomes of completed work.</p></div>
+            <div className="grid md:grid-cols-3 gap-7">
+              {[
+                ["Commercial Facilities", "Integrated security, networking and building systems for multi-building environments.", "/turn.png"],
+                ["Institutional Infrastructure", "Campus infrastructure combining connectivity, security and operational systems.", "/board.webp"],
+                ["Systems Integration", "Connecting independent systems into a coordinated operational environment.", "/mtgs.jpg"]
+              ].map(([title, text, image]) => <article key={title} className="border border-border-light overflow-hidden bg-primary-bg"><div className="relative h-56 bg-secondary-bg"><NextImage src={image} alt={title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" /></div><div className="p-7"><p className="text-accent-red text-xs uppercase font-bold tracking-widest mb-3">Case study</p><h3 className="text-2xl font-bold mb-3">{title}</h3><p className="text-muted-text leading-relaxed">{text}</p></div></article>)}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-secondary-bg py-20">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-wrap gap-3 items-center"><span className="font-bold mr-3">Technologies & protocols</span>{['BACnet/IP', 'KNX', 'Modbus', 'PLC', 'SCADA', 'BMS', 'IP Networking', 'CCTV', 'Access Control'].map(item => <span key={item} className="border border-border-light bg-primary-bg px-4 py-2 rounded-full text-sm font-semibold">{item}</span>)}</div>
+        </section>
+
+        <section className="py-24">
+          <div className="max-w-4xl mx-auto px-6 lg:px-8">
+            <p className="text-accent-red font-bold uppercase tracking-widest text-sm mb-3">Technical questions</p><h2 className="text-4xl font-bold mb-10">Frequently asked questions</h2>
+            <div>{[
+              ["Can you integrate existing building systems?", "Yes. We can assess existing infrastructure and design an integration approach around supported equipment and protocols."],
+              ["Do you provide design and commissioning?", "Our approach covers engineering, implementation, testing and commissioning, with project scope defined around the requirements."],
+              ["Can you integrate third-party equipment?", "Where equipment exposes suitable interfaces or protocols, integration can be designed around the existing installation."],
+              ["Do you work with consulting engineers and EPC contractors?", "Yes. We can support project teams with specialist engineering, systems integration, installation and commissioning scopes."],
+              ["Do you provide maintenance and lifecycle support?", "Yes. Support can be structured around preventive maintenance, troubleshooting, system health and ongoing technical requirements."]
+            ].map(([q, a]) => <FAQItem key={q} question={q} answer={a} />)}</div>
+          </div>
+        </section>
+
+        <section id="contact" className="bg-primary-text text-white py-24">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-16">
+            <div>
+              <p className="text-accent-red font-bold uppercase tracking-widest text-sm mb-3">Start a project</p>
+              <h2 className="text-4xl lg:text-5xl font-bold mb-6">Have a complex project? Let's engineer it.</h2>
+              <p className="text-white/65 text-lg leading-relaxed mb-8">Tell us what you are building, upgrading or trying to solve. We will use the information to understand the opportunity before discussing scope.</p>
+              <div className="space-y-3 text-white/75"><p><strong className="text-white">Harare, Zimbabwe</strong></p><p><a href="mailto:info@admill.co.zw" className="hover:text-white">info@admill.co.zw</a></p><p><a href="tel:+263715017744" className="hover:text-white">+263 715 017 744</a></p></div>
+            </div>
+            <form onSubmit={submitForm} className="bg-white text-primary-text p-7 md:p-9 grid gap-4" aria-label="Project enquiry form">
+              <input type="text" name="honeypot" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
+              <input type="hidden" name="timestamp" value={formTimestamp} />
+              <div className="grid md:grid-cols-2 gap-4"><input name="name" required minLength={2} maxLength={100} placeholder="Your name *" className="border border-border-light px-4 py-3 rounded-md" /><input name="company" maxLength={150} placeholder="Company" className="border border-border-light px-4 py-3 rounded-md" /></div>
+              <div className="grid md:grid-cols-2 gap-4"><input name="email" type="email" required maxLength={254} placeholder="Email *" className="border border-border-light px-4 py-3 rounded-md" /><input name="phone" maxLength={50} placeholder="Phone / WhatsApp" className="border border-border-light px-4 py-3 rounded-md" /></div>
+              <div className="grid md:grid-cols-2 gap-4"><select name="projectType" className="border border-border-light px-4 py-3 rounded-md"><option value="">Project type</option>{['Electrical Engineering','Power & Energy','Generator / ATS','BMS / Building Automation','Industrial Automation','Electronic Security','Fire & Life Safety','Systems Integration','Other'].map(x => <option key={x}>{x}</option>)}</select><select name="projectStage" className="border border-border-light px-4 py-3 rounded-md"><option value="">Project stage</option>{['Concept','Design','Tender','Construction','Existing Facility Upgrade','Maintenance','Other'].map(x => <option key={x}>{x}</option>)}</select></div>
+              <input name="projectLocation" maxLength={150} placeholder="Project location" className="border border-border-light px-4 py-3 rounded-md" />
+              <textarea name="message" required minLength={10} maxLength={5000} rows={6} placeholder="Tell us about the project, problem or requirement *" className="border border-border-light px-4 py-3 rounded-md" />
+              <button type="submit" disabled={!canSubmit || isSubmitting} className="bg-accent-red text-white px-6 py-4 rounded-full font-bold disabled:opacity-60">{isSubmitting ? "Sending…" : !canSubmit ? "Please wait…" : "Send Project Enquiry"}</button>
+            </form>
+          </div>
+        </section>
+      </main>
+
+      <footer className="bg-primary-bg border-t border-border-light py-12">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 grid md:grid-cols-3 gap-8"><div><NextImage src="/logo-02.png" alt="Admill Systems" width={58} height={48} className="h-10 w-auto mb-4" /><p className="text-sm text-muted-text max-w-sm">Electrical, electronic and building systems engineering and integration for commercial, industrial and institutional facilities.</p></div><div><h3 className="font-bold mb-4">Solutions</h3><p className="text-sm text-muted-text leading-7">Electrical Engineering<br />Power & Energy<br />BMS & Building Automation<br />Industrial Automation<br />Electronic Security<br />Systems Integration</p></div><div><h3 className="font-bold mb-4">Contact</h3><p className="text-sm text-muted-text leading-7">Hogerty Hill, Harare, Zimbabwe<br /><a href="mailto:info@admill.co.zw">info@admill.co.zw</a><br /><a href="tel:+263715017744">+263 715 017 744</a></p></div></div>
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 mt-10 pt-6 border-t border-border-light text-xs text-muted-text">© {new Date().getFullYear()} Admill Systems. All rights reserved.</div>
+      </footer>
+    </div>
   );
 }
