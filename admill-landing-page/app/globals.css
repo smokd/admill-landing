@@ -14,9 +14,11 @@
   --color-muted-text: #6B7280;     /* For muted text (medium gray) */
   --color-border-light: #E0E0E0;   /* For light borders */
 
-  /* Custom Fonts */
-  --font-family-heading: "Inter", sans-serif; /* Clean, modern sans-serif */
-  --font-family-body: "Inter", sans-serif;   /* Same for body for consistency, or another clean sans */
+  /* Custom Fonts (backed by next/font Geist, preloaded by layout.tsx) */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-family-heading: var(--font-geist-sans);
+  --font-family-body: var(--font-geist-sans);
 
   /* Example: Custom breakpoints if needed (optional) */
   --breakpoint-xl: 1280px;
