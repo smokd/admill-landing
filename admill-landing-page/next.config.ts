@@ -4,6 +4,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   output: 'export', // Enable static site generation
+  trailingSlash: true, // Emit route directories with index.html for static hosting
   // NOTE: This disables API routes. Contact form must POST to external endpoint.
   images: {
     unoptimized: true, // Required for static export

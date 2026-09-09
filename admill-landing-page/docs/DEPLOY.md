@@ -48,17 +48,19 @@ ssh ubuntu@YOUR_AWS_IP "sudo systemctl reload nginx"
 
 ## Automated Deploy (GitHub Actions)
 
+The workflow in `.github/workflows/deploy.yml` SSHs into the **Vultr** server and runs the deployment sequence there (git pull → build → rsync to nginx root). Matomo is preserved.
+
 ### Setup (One-time)
 
 1. **Add SSH key to GitHub Secrets:**
    ```powershell
-   # On your local machine, copy your AWS private key
-   cat ~/.ssh/id_rsa  # or wherever your key is
+   # On your local machine, copy your Vultr private key
+   type C:\Users\USER\.ssh\vultr-ssh-key-terminal
    ```
 
 2. **In GitHub repo → Settings → Secrets → Actions:**
-   - Add `AWS_SSH_KEY` = your private key content
-   - Add `AWS_HOST` = your server IP or domain
+   - Add `VULTR_SSH_KEY` = your private key content (user: `root`)
+   - Add `VULTR_HOST` = `admill.co.zw` (or server IP)
 
 3. **Push the workflow file** (already created in `.github/workflows/deploy.yml`)
 
@@ -70,9 +72,10 @@ git commit -m "Deploy changes"
 git push origin main
 
 # GitHub Actions will automatically:
-# 1. Build the site
-# 2. Upload to your server
-# 3. Reload nginx
+# 1. git pull latest source on server
+# 2. npm install && npm run build
+# 3. rsync out/ → /var/www/admill.co.zw/public/
+# 4. Reload nginx
 ```
 
 ---
