@@ -139,7 +139,7 @@ export default function HomePage() {
       <main id="top">
         <section className="relative min-h-[760px] pt-20 flex items-center overflow-hidden">
           <div className="absolute inset-0">
-            <video className="w-full h-full object-cover" src="/security-hero.mp4" autoPlay loop muted playsInline preload="metadata" poster="/eng.jpg" aria-hidden="true" />
+            <video className="w-full h-full object-cover" src="/eng.jpg" autoPlay loop muted playsInline preload="metadata" poster="/eng.jpg" aria-hidden="true" />
             <div className="absolute inset-0 bg-white/85 md:bg-white/78" />
           </div>
           <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-24 w-full">

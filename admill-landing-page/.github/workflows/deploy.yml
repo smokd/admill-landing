@@ -1,4 +1,4 @@
-name: Deploy to AWS
+name: Deploy to Vultr
 
 on:
   push:
@@ -10,34 +10,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Pull, build and deploy on server
+        uses: appleboy/ssh-action@v1.2.1
         with:
-          node-version: '20'
-          cache: 'npm'
+          host: ${{ secrets.VULTR_HOST }}
+          username: root
+          key: ${{ secrets.VULTR_SSH_KEY }}
+          script: |
+            set -e
+            REPO=/var/www/admill.co.zw/admill.co.zw
+            PROJECT=$REPO/admill-landing-page
+            SITE=/var/www/admill.co.zw/public
 
-      - name: Install dependencies
-        run: npm ci
+            echo "==> Pulling latest code (autostash preserves local robots.txt tweak)"
+            git -C $REPO pull --autostash --ff-only origin main
 
-      - name: Build Next.js static site
-        run: npm run build
-        env:
-          NODE_OPTIONS: '--max-old-space-size=2048'
+            echo "==> Installing dependencies"
+            cd $PROJECT
+            npm install --no-audit --no-fund
 
-      - name: Deploy to AWS EC2
-        uses: easingthemes/ssh-deploy@v5.0.3
-        with:
-          SSH_PRIVATE_KEY: ${{ secrets.AWS_SSH_KEY }}
-          REMOTE_HOST: ${{ secrets.AWS_HOST }}
-          REMOTE_USER: ubuntu
-          SOURCE: "out/"
-          TARGET: "/var/www/admill.co.zw/"
-          EXCLUDE: "/out/, /.git/, /.github/"
-          SCRIPT_BEFORE: |
-            echo "Starting deployment..."
-          SCRIPT_AFTER: |
-            echo "Deployment complete!"
-            sudo systemctl reload nginx
+            echo "==> Building static site"
+            NODE_OPTIONS=--max-old-space-size=1024 npm run build
+
+            echo "==> Syncing out/ to nginx root (matomo preserved)"
+            rsync -a --exclude='matomo' $PROJECT/out/ $SITE/
+
+            echo "==> Reloading nginx"
+            systemctl reload nginx
+
+            echo "✅ Deployment complete"
