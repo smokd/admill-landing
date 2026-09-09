@@ -207,13 +207,14 @@ export default function HomePage() {
 
         <section id="projects" className="py-24">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14"><div><p className="text-accent-red font-bold uppercase tracking-widest text-sm mb-3">Project evidence</p><h2 className="text-4xl lg:text-5xl font-bold">Show the engineering. Not just the equipment.</h2></div><p className="max-w-xl text-muted-text leading-relaxed">We are building a technical project library covering the scope, technologies, challenges and outcomes of completed work.</p></div>
-            <div className="grid md:grid-cols-3 gap-7">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14"><div><p className="text-accent-red font-bold uppercase tracking-widest text-sm mb-3">Project evidence</p><h2 className="text-4xl lg:text-5xl font-bold">Real facilities. Real systems. Real results.</h2></div><p className="max-w-xl text-muted-text leading-relaxed">Explore highlighted projects where Admill designed, integrated and commissioned the critical infrastructure.</p></div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-7">
               {[
                 ["Commercial Facilities", "Integrated security, networking and building systems for multi-building environments.", "/turn.png"],
                 ["Institutional Infrastructure", "Campus infrastructure combining connectivity, security and operational systems.", "/board.webp"],
-                ["Systems Integration", "Connecting independent systems into a coordinated operational environment.", "/mtgs.jpg"]
-              ].map(([title, text, image]) => <article key={title} className="border border-border-light overflow-hidden bg-primary-bg"><div className="relative h-56 bg-secondary-bg"><NextImage src={image} alt={title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" /></div><div className="p-7"><p className="text-accent-red text-xs uppercase font-bold tracking-widest mb-3">Case study</p><h3 className="text-2xl font-bold mb-3">{title}</h3><p className="text-muted-text leading-relaxed">{text}</p></div></article>)}
+                ["Systems Integration", "Connecting independent systems into a coordinated operational environment.", "/mtgs.jpg"],
+                ["Custom BMS Solution", "Bespoke building management controls engineered for a religious institution in Harare — configured around its unique spaces, schedules and operations.", "/lds.jpg"]
+              ].map(([title, text, image]) => <article key={title} className="border border-border-light overflow-hidden bg-primary-bg"><div className="relative h-56 bg-secondary-bg"><NextImage src={image} alt={title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" /></div><div className="p-7"><p className="text-accent-red text-xs uppercase font-bold tracking-widest mb-3">Featured project</p><h3 className="text-2xl font-bold mb-3">{title}</h3><p className="text-muted-text leading-relaxed">{text}</p></div></article>)}
             </div>
           </div>
         </section>
