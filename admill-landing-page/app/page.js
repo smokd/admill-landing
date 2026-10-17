@@ -7,6 +7,15 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { FiArrowRight, FiCheck, FiChevronDown } from "react-icons/fi";
 
+const solutionIcons = {
+  "Electrical Engineering": "/icons/electrical-engineering.svg",
+  "Power & Energy": "/icons/renewable-energy.svg",
+  "Building Automation & BMS": "/icons/building-management.svg",
+  "Industrial Automation": "/icons/industrial-automation.svg",
+  "Electronic Security": "/icons/electronic-security.svg",
+  "Systems Integration": "/icons/systems-integration.svg",
+};
+
 const solutions = [
   {
     title: "Electrical Engineering",
@@ -176,7 +185,10 @@ export default function HomePage() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-border-light border border-border-light">
               {solutions.map((solution) => (
                 <Link key={solution.title} href={solution.href} className="bg-primary-bg p-8 lg:p-9 hover:bg-secondary-bg transition-colors">
-                  <div className="w-10 h-1 bg-accent-red mb-7" />
+                  <div className="flex items-center gap-4 mb-7">
+                    <NextImage src={solutionIcons[solution.title]} alt="" width={40} height={40} className="w-10 h-10" />
+                    <div className="w-10 h-1 bg-accent-red" />
+                  </div>
                   <h3 className="text-2xl font-bold mb-4">{solution.title}</h3>
                   <p className="text-muted-text leading-relaxed mb-7">{solution.text}</p>
                   <div className="flex flex-wrap gap-2">{solution.tags.map(tag => <span key={tag} className="text-xs font-semibold border border-border-light px-3 py-1.5 rounded-full">{tag}</span>)}</div>

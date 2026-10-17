@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Building management and automation">
+  <path d="M5 21V4.6A1.6 1.6 0 0 1 6.6 3h6.8A1.6 1.6 0 0 1 15 4.6V21" stroke="#12233F" stroke-width="1.6"/>
+  <path d="M15 9.5h2.4A1.6 1.6 0 0 1 19 11.1V21" stroke="#12233F" stroke-width="1.6"/>
+  <path d="M3 21h18" stroke="#12233F" stroke-width="1.6"/>
+  <path d="M7.6 7h1.5M10.9 7h1.5M7.6 10.4h1.5M10.9 10.4h1.5M7.6 13.8h1.5M10.9 13.8h1.5" stroke="#12233F" stroke-width="1.4"/>
+  <circle cx="16.9" cy="16.9" r="1.9" fill="#C6A24B"/>
+</svg>
