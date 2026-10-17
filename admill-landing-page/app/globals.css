@@ -14,11 +14,11 @@
   --color-muted-text: #6B7280;     /* For muted text (medium gray) */
   --color-border-light: #E0E0E0;   /* For light borders */
 
-  /* Custom Fonts (backed by next/font Geist, preloaded by layout.tsx) */
-  --font-sans: var(--font-geist-sans);
+  /* Custom Fonts (Plus Jakarta Sans ≈ Tesla Universal Sans; Geist Mono for code) */
+  --font-sans: var(--font-plus-jakarta);
   --font-mono: var(--font-geist-mono);
-  --font-family-heading: var(--font-geist-sans);
-  --font-family-body: var(--font-geist-sans);
+  --font-family-heading: var(--font-plus-jakarta);
+  --font-family-body: var(--font-plus-jakarta);
 
   /* Example: Custom breakpoints if needed (optional) */
   --breakpoint-xl: 1280px;
@@ -66,6 +66,7 @@ section[id], main[id] {
 /* Example for headings if you want a different font */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-family-heading);
+  letter-spacing: -0.02em;
 }
 
 /* Other utility styles or components */
