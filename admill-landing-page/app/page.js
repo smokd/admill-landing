@@ -14,6 +14,10 @@ const solutionIcons = {
   "Industrial Automation": "/icons/industrial-automation.svg",
   "Electronic Security": "/icons/electronic-security.svg",
   "Systems Integration": "/icons/systems-integration.svg",
+  "Fire & Life Safety": "/icons/fire-safety.svg",
+  "Automatic Door Systems": "/icons/automatic-door-systems.svg",
+  "Lead & Lag Controllers": "/icons/lead-lag-controllers.svg",
+  "LoRa Telemetry Networks": "/icons/lora-telemetry-networks.svg",
 };
 
 const solutions = [
@@ -51,6 +55,21 @@ const solutions = [
     title: "Fire & Life Safety",
     text: "Fire detection, alarm interfaces and life-safety systems integrated with wider facility infrastructure.",
     tags: ["Fire Detection", "Alarm Interfaces", "Emergency Systems"], href: "/solutions/fire-life-safety"
+  },
+  {
+    title: "Automatic Door Systems",
+    text: "Automatic sliding, swing and revolving entrances with access control, safety sensing and life-safety release.",
+    tags: ["Sliding Doors", "Access Control", "Entrances"], href: "/solutions/automatic-door-systems"
+  },
+  {
+    title: "Lead & Lag Controllers",
+    text: "Custom-built pump and compressor sequencing controllers that balance runtime and protect plant equipment.",
+    tags: ["Pump Control", "Duty / Standby", "Custom Panels"], href: "/solutions/lead-lag-controllers"
+  },
+  {
+    title: "LoRa Telemetry Networks",
+    text: "Long-range, low-power wireless telemetry connecting remote pumps, tanks and meters to central monitoring.",
+    tags: ["LoRaWAN", "Telemetry", "Remote Monitoring"], href: "/solutions/lora-telemetry-networks"
   }
 ];
 
@@ -263,7 +282,7 @@ export default function HomePage() {
               <input type="hidden" name="timestamp" value={formTimestamp} />
               <div className="grid md:grid-cols-2 gap-4"><div className="grid gap-1"><label htmlFor="name">Your name *</label><input id="name" name="name" required minLength={2} maxLength={100} autoComplete="name" className="border border-border-light px-4 py-3 rounded-md" /></div><div className="grid gap-1"><label htmlFor="company">Company</label><input id="company" name="company" maxLength={150} autoComplete="organization" className="border border-border-light px-4 py-3 rounded-md" /></div></div>
               <div className="grid md:grid-cols-2 gap-4"><div className="grid gap-1"><label htmlFor="email">Email *</label><input id="email" name="email" type="email" required maxLength={254} autoComplete="email" className="border border-border-light px-4 py-3 rounded-md" /></div><div className="grid gap-1"><label htmlFor="phone">Phone / WhatsApp</label><input id="phone" name="phone" maxLength={50} autoComplete="tel" className="border border-border-light px-4 py-3 rounded-md" /></div></div>
-              <div className="grid md:grid-cols-2 gap-4"><div className="grid gap-1"><label htmlFor="projectType">Project type</label><select id="projectType" name="projectType" className="border border-border-light px-4 py-3 rounded-md"><option value="">Select a project type</option>{['Electrical Engineering','Power & Energy','Generator / ATS','BMS / Building Automation','Industrial Automation','Electronic Security','Fire & Life Safety','Systems Integration','Other'].map(x => <option key={x}>{x}</option>)}</select></div><div className="grid gap-1"><label htmlFor="projectStage">Project stage</label><select id="projectStage" name="projectStage" className="border border-border-light px-4 py-3 rounded-md"><option value="">Select a project stage</option>{['Concept','Design','Tender','Construction','Existing Facility Upgrade','Maintenance','Other'].map(x => <option key={x}>{x}</option>)}</select></div></div>
+              <div className="grid md:grid-cols-2 gap-4"><div className="grid gap-1"><label htmlFor="projectType">Project type</label><select id="projectType" name="projectType" className="border border-border-light px-4 py-3 rounded-md"><option value="">Select a project type</option>{['Electrical Engineering','Power & Energy','Generator / ATS','BMS / Building Automation','Industrial Automation','Electronic Security','Fire & Life Safety','Automatic Door Systems','Lead & Lag Controllers','LoRa Telemetry Networks','Systems Integration','Other'].map(x => <option key={x}>{x}</option>)}</select></div><div className="grid gap-1"><label htmlFor="projectStage">Project stage</label><select id="projectStage" name="projectStage" className="border border-border-light px-4 py-3 rounded-md"><option value="">Select a project stage</option>{['Concept','Design','Tender','Construction','Existing Facility Upgrade','Maintenance','Other'].map(x => <option key={x}>{x}</option>)}</select></div></div>
               <div className="grid gap-1"><label htmlFor="projectLocation">Project location</label><input id="projectLocation" name="projectLocation" maxLength={150} autoComplete="address-level2" className="border border-border-light px-4 py-3 rounded-md" /></div>
               <div className="grid gap-1"><label htmlFor="message">Project requirement *</label><textarea id="message" name="message" required minLength={10} maxLength={5000} rows={6} placeholder="Tell us about the project, problem or requirement" className="border border-border-light px-4 py-3 rounded-md" /></div>
               <button type="submit" disabled={!canSubmit || isSubmitting} className="bg-accent-red text-white px-6 py-4 rounded-full font-bold disabled:opacity-60">{isSubmitting ? "Sending…" : !canSubmit ? "Please wait…" : "Send Project Enquiry"}</button>
@@ -274,7 +293,7 @@ export default function HomePage() {
       </main>
 
       <footer className="bg-primary-bg border-t border-border-light py-12">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 grid md:grid-cols-3 gap-8"><div><NextImage src="/logo-02.png" alt="Admill Systems" width={58} height={48} className="h-10 w-auto mb-4" /><p className="text-sm text-muted-text max-w-sm">Electrical, electronic and building systems engineering and integration for commercial, industrial and institutional facilities.</p></div><div><h3 className="font-bold mb-4">Solutions</h3><p className="text-sm text-muted-text leading-7">Electrical Engineering<br />Power & Energy<br />BMS & Building Automation<br />Industrial Automation<br />Electronic Security<br />Systems Integration</p></div><div><h3 className="font-bold mb-4">Contact</h3><p className="text-sm text-muted-text leading-7">Hogerty Hill, Harare, Zimbabwe<br /><a href="mailto:info@admill.co.zw">info@admill.co.zw</a><br /><a href="tel:+263715017744">+263 715 017 744</a></p></div></div>
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 grid md:grid-cols-3 gap-8"><div><NextImage src="/logo-02.png" alt="Admill Systems" width={58} height={48} className="h-10 w-auto mb-4" /><p className="text-sm text-muted-text max-w-sm">Electrical, electronic and building systems engineering and integration for commercial, industrial and institutional facilities.</p></div><div><h3 className="font-bold mb-4">Solutions</h3><p className="text-sm text-muted-text leading-7">Electrical Engineering<br />Power & Energy<br />BMS & Building Automation<br />Industrial Automation<br />Electronic Security<br />Fire & Life Safety<br />Automatic Door Systems<br />Lead & Lag Controllers<br />LoRa Telemetry Networks<br />Systems Integration</p></div><div><h3 className="font-bold mb-4">Contact</h3><p className="text-sm text-muted-text leading-7">Hogerty Hill, Harare, Zimbabwe<br /><a href="mailto:info@admill.co.zw">info@admill.co.zw</a><br /><a href="tel:+263715017744">+263 715 017 744</a></p></div></div>
         <div className="max-w-7xl mx-auto px-6 lg:px-8 mt-10 pt-6 border-t border-border-light text-xs text-muted-text">© {new Date().getFullYear()} Admill Systems. All rights reserved.</div>
       </footer>
     </div>

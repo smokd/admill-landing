@@ -13,6 +13,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "electronic-security",
     "fire-life-safety",
     "systems-integration",
+    "automatic-door-systems",
+    "lead-lag-controllers",
+    "lora-telemetry-networks",
   ];
 
   const industries = [

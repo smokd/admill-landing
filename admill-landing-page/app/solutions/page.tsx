@@ -15,6 +15,9 @@ const solutions = [
   ["Electronic Security", "CCTV, access control, intrusion detection and integrated security architecture.", "/solutions/electronic-security"],
   ["Fire & Life Safety", "Detection, alarm interfaces, emergency systems and coordinated life-safety integration.", "/solutions/fire-life-safety"],
   ["Systems Integration", "Electrical, automation, BMS, security and networked systems working together.", "/solutions/systems-integration"],
+  ["Automatic Door Systems", "Automatic sliding, swing and revolving entrances with access-control and safety integration.", "/solutions/automatic-door-systems"],
+  ["Lead & Lag Controllers", "Custom-built pump and compressor sequencing controllers engineered to the plant.", "/solutions/lead-lag-controllers"],
+  ["LoRa Telemetry Networks", "Long-range wireless telemetry connecting remote assets to central monitoring.", "/solutions/lora-telemetry-networks"],
 ];
 
 export default function SolutionsIndexPage() {

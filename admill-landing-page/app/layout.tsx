@@ -161,6 +161,9 @@ export default function RootLayout({
               "Electronic Security",
               "Fire and Life Safety",
               "Systems Integration",
+              "Automatic Door Systems",
+              "Lead and Lag Controllers",
+              "LoRa Telemetry Networks",
             ].map((name) => ({
               "@type": "Offer",
               itemOffered: { "@type": "Service", name },
