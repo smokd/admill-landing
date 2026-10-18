@@ -89,12 +89,11 @@ export default function SiteNavbar() {
             className="h-11 w-auto"
           />
           <span
-            className={`text-2xl font-semibold leading-none tracking-tight transition-colors ${
+            className={`text-3xl font-semibold leading-none tracking-tight transition-colors ${
               solid ? "text-[#171A20]" : "text-white"
             }`}
           >
-            admill
-            <span className={solid ? "font-normal text-muted-text" : "font-normal text-white/70"}> systems</span>
+            admill<span className="font-normal text-accent-red"> systems</span>
           </span>
         </Link>
 
