@@ -1,14 +1,13 @@
 // app/layout.tsx
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Geist_Mono } from "next/font/google";
+import { Inter, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import SiteNavbar from "@/components/site-navbar";
 import "./globals.css";
 
-const jakarta = Plus_Jakarta_Sans({
-  variable: "--font-plus-jakarta",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -196,7 +195,7 @@ export default function RootLayout({
         `}
       </script>
 
-      <body className={`${jakarta.variable} ${geistMono.variable} bg-white text-neutral-900 font-sans`}>
+      <body className={`${inter.variable} ${geistMono.variable} bg-white text-neutral-900 font-sans`}>
         <SiteNavbar />
         {children}
       </body>
