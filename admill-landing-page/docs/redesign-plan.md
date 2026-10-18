@@ -111,10 +111,12 @@ Two tracks, because the photo pipeline is not ready yet:
   Reusable script: `scripts/optimize-images.mjs`.
 - **T4** ✅ Hero image gets `priority` + `fetchPriority="high"` + `sizes="100vw"`.
 
-### Phase 1 — Media foundation
-- **T5** Build `components/media-frame.js` (`next/image` + SVG placeholder fallback + ratio).
-- **T6** Build the branded placeholder SVG (navy/gold, label + target filename, light/dark tones).
-- **T7** Wire `Media` into the projects grid first (pilot), verify zero layout shift.
+### Phase 1 — Media foundation (DONE)
+- **T5** ✅ `components/media-frame.js` — `<Media>` renders `next/image` when `src` is set,
+  otherwise a branded placeholder; enforces an aspect ratio (no layout shift).
+- **T6** ✅ Blueprint-style SVG placeholder (navy/gold, corner brackets, label + hint +
+  "IMAGE PENDING" mark). Flat SVG with no `defs`/ids, so many can coexist.
+- **T7** ✅ Wired into the projects grid; swap to a photo is a one-line `src` change.
 
 ### Phase 2 — Homepage revamp
 - **T8** Rework hero: dark full-bleed media, reduced overlay, refined type scale, two CTAs.

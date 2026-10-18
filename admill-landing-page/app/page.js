@@ -6,6 +6,7 @@ import NextImage from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { FiArrowRight, FiCheck, FiChevronDown } from "react-icons/fi";
+import Media from "@/components/media-frame";
 
 const solutionIcons = {
   "Electrical Engineering": "/icons/electrical-engineering.svg",
@@ -247,7 +248,7 @@ export default function HomePage() {
                 ["Institutional Infrastructure", "Campus infrastructure combining connectivity, security and operational systems.", "/board.webp"],
                 ["Systems Integration", "Connecting independent systems into a coordinated operational environment.", "/mtgs.jpg"],
                 ["BYD Harare", "Electrical installation and structured networking powering BYD's Harare showroom and service facility.", "/byd-600x338.webp"]
-              ].map(([title, text, image]) => <article key={title} className="border border-border-light overflow-hidden bg-primary-bg"><div className="relative h-56 bg-secondary-bg"><NextImage src={image} alt={title} fill className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw" /></div><div className="p-7"><p className="text-accent-red text-xs uppercase font-bold tracking-widest mb-3">Featured project</p><h3 className="text-2xl font-bold mb-3">{title}</h3><p className="text-muted-text leading-relaxed">{text}</p></div></article>)}
+              ].map(([title, text, image]) => <article key={title} className="border border-border-light overflow-hidden bg-primary-bg"><Media src={image} alt={title} ratio="16/9" sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw" /><div className="p-7"><p className="text-accent-red text-xs uppercase font-bold tracking-widest mb-3">Featured project</p><h3 className="text-2xl font-bold mb-3">{title}</h3><p className="text-muted-text leading-relaxed">{text}</p></div></article>)}
             </div>
           </div>
         </section>
