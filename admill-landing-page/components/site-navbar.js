@@ -100,7 +100,7 @@ export default function SiteNavbar() {
 
         <nav
           aria-label="Primary navigation"
-          className={`hidden items-center gap-1 text-[14px] font-medium transition-colors lg:flex ${
+          className={`hidden items-center gap-1 text-[14px] font-medium tracking-[-0.015em] transition-colors lg:flex ${
             solid ? "text-[#171A20]" : "text-white"
           }`}
         >
