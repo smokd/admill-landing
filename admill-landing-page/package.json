@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "optimize-images": "node scripts/optimize-images.mjs",
+    "check:images": "node scripts/check-image-budget.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.23.9",

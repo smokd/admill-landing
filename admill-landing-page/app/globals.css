@@ -84,3 +84,35 @@ h1, h2, h3, h4, h5, h6 {
 a:hover {
   color: var(--color-admill-light);
 } */
+
+/* Accessibility: visible keyboard focus */
+:focus-visible {
+  outline: 2px solid var(--color-accent-red);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Branded text selection */
+::selection {
+  background-color: var(--color-accent-red);
+  color: #ffffff;
+}
+
+/* Smooth in-page anchor scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

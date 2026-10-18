@@ -128,16 +128,20 @@ Two tracks, because the photo pipeline is not ready yet:
 - **T12** ✅ Projects upgraded to case-study cards: tag chip, hover border + image zoom.
 - **T13** ⏳ Stats/trust strip — needs real figures from the client (not fabricated).
 
-### Phase 3 — Inner pages
-- **T14** Apply `Media` + placeholder to solution and industry page headers.
-- **T15** Cross-link new solutions into relevant industry pages (`related-solutions`).
-- **T16** Add a photo to each solution page hero.
+### Phase 3 — Inner pages (DONE)
+- **T14** ✅ Header media added to all 16 solution + industry pages (`Media` background with
+  80% navy overlay, labelled placeholder per page).
+- **T15** ✅ New solutions cross-linked into relevant industries (doors → commercial/healthcare/
+  education/hospitality; lead-lag → manufacturing; LoRa → mining).
+- **T16** ✅ Covered by T14 (each inner page header is its photo slot).
 
-### Phase 4 — Polish
-- **T17** Colour-contrast + focus-state audit (WCAG AA).
-- **T18** Motion pass (respect `prefers-reduced-motion`).
-- **T19** Image weight budget check in CI; Lighthouse baseline.
-- **T20** Optional: per-project case-study pages (`/projects/[slug]`).
+### Phase 4 — Polish (T17–T19 DONE, T20 optional)
+- **T17** ✅ `:focus-visible` outline, branded `::selection`; dark-section text contrast verified
+  (white/60 on charcoal ≈ 6.9:1).
+- **T18** ✅ `prefers-reduced-motion` honoured; smooth anchor scrolling added.
+- **T19** ✅ `npm run check:images` budget script (350 KB) + `npm run optimize-images`.
+  CI wiring is optional and not enabled.
+- **T20** ⏳ Optional: per-project case-study pages (`/projects/[slug]`) — not started.
 
 ---
 

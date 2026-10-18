@@ -26,11 +26,11 @@ export default function Media({
   imgClassName = "object-cover",
   children,
 }) {
-  const aspectRatio = RATIOS[ratio] ?? RATIOS["4/3"];
+  const aspectRatio = ratio ? RATIOS[ratio] ?? RATIOS["4/3"] : undefined;
   return (
     <div
       className={`relative overflow-hidden bg-secondary-bg ${rounded ? "rounded-xl" : ""} ${className}`}
-      style={{ aspectRatio }}
+      style={aspectRatio ? { aspectRatio } : undefined}
     >
       {src ? (
         <NextImage

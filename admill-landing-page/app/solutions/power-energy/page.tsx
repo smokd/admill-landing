@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Media from "@/components/media-frame";
 
 export const metadata: Metadata = {
   title: "Power & Energy Systems in Zimbabwe",
@@ -12,7 +13,7 @@ const services = ["Generator systems", "Automatic transfer systems", "Solar PV a
 export default function PowerEnergyPage() {
   return (
     <main className="min-h-screen bg-white text-neutral-900">
-      <section className="bg-neutral-950 px-6 py-24 text-white"><div className="mx-auto max-w-6xl">
+      <section className="relative overflow-hidden bg-neutral-950 px-6 py-24 text-white"><div className="absolute inset-0"><Media ratio={null} tone="dark" label="Power & Energy" hint="power-energy.jpg" className="h-full w-full" /></div><div className="absolute inset-0 bg-neutral-950/80" /><div className="relative mx-auto max-w-6xl">
         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-red-400">Power & Energy</p>
         <h1 className="mt-5 max-w-4xl text-4xl font-bold md:text-6xl">Keep critical facilities powered when reliability matters.</h1>
         <p className="mt-7 max-w-3xl text-lg leading-8 text-neutral-300">We engineer backup power, transfer, solar and energy monitoring systems around the operational requirements of the facility—not just individual pieces of equipment.</p>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Media from "@/components/media-frame";
 
 export const metadata: Metadata = {
   title: "Electrical Engineering in Zimbabwe",
@@ -20,8 +21,10 @@ const capabilities = [
 export default function ElectricalEngineeringPage() {
   return (
     <main className="min-h-screen bg-white text-neutral-900">
-      <section className="bg-neutral-950 px-6 py-24 text-white">
-        <div className="mx-auto max-w-6xl">
+      <section className="relative overflow-hidden bg-neutral-950 px-6 py-24 text-white">
+        <div className="absolute inset-0"><Media ratio={null} tone="dark" label="Electrical Engineering" hint="electrical-engineering.jpg" className="h-full w-full" /></div>
+        <div className="absolute inset-0 bg-neutral-950/80" />
+        <div className="relative mx-auto max-w-6xl">
           <p className="mb-5 text-sm font-semibold uppercase tracking-[0.2em] text-red-400">Electrical Engineering</p>
           <h1 className="max-w-4xl text-4xl font-bold tracking-tight md:text-6xl">
             Reliable electrical infrastructure for demanding facilities.
