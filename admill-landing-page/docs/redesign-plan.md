@@ -103,11 +103,13 @@ Two tracks, because the photo pipeline is not ready yet:
 
 ## 4. Phased implementation plan
 
-### Phase 0 — Quick fixes (small, high impact)
-- **T1** Fix hero media (`page.js:170`): use `security-hero.mp4` with an image poster, or an image.
-- **T2** Make footer solutions links; group/tidy the 10 items.
-- **T3** Compress the five oversized images in `public/` (hh, turn, mtgs, eng, board).
-- **T4** Add `priority` to the hero image and correct `sizes` everywhere.
+### Phase 0 — Quick fixes (DONE)
+- **T1** ✅ Hero media fixed: `<video src="/eng.jpg">` replaced with `<NextImage fill priority fetchPriority="high">`.
+- **T2** ✅ Footer solutions are now links, generated from the solutions array.
+- **T3** ✅ Images compressed in place (~3.0 MB → ~1.1 MB): eng 543→303, mtgs 562→113,
+  hh 763→253, turn 615→258, board 362→82, lds 102→71, byd 25→20 KB.
+  Reusable script: `scripts/optimize-images.mjs`.
+- **T4** ✅ Hero image gets `priority` + `fetchPriority="high"` + `sizes="100vw"`.
 
 ### Phase 1 — Media foundation
 - **T5** Build `components/media-frame.js` (`next/image` + SVG placeholder fallback + ratio).

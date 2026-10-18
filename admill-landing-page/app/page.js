@@ -167,7 +167,7 @@ export default function HomePage() {
       <main id="top">
         <section className="relative min-h-[760px] pt-20 flex items-center overflow-hidden">
           <div className="absolute inset-0">
-            <video className="w-full h-full object-cover" src="/eng.jpg" autoPlay loop muted playsInline preload="metadata" poster="/eng.jpg" aria-hidden="true" />
+            <NextImage src="/eng.jpg" alt="" fill priority fetchPriority="high" sizes="100vw" className="object-cover" aria-hidden="true" />
             <div className="absolute inset-0 bg-white/85 md:bg-white/78" />
           </div>
           <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-24 w-full">
@@ -293,7 +293,7 @@ export default function HomePage() {
       </main>
 
       <footer className="bg-primary-bg border-t border-border-light py-12">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 grid md:grid-cols-3 gap-8"><div><NextImage src="/logo-02.png" alt="Admill Systems" width={58} height={48} className="h-10 w-auto mb-4" /><p className="text-sm text-muted-text max-w-sm">Electrical, electronic and building systems engineering and integration for commercial, industrial and institutional facilities.</p></div><div><h3 className="font-bold mb-4">Solutions</h3><p className="text-sm text-muted-text leading-7">Electrical Engineering<br />Power & Energy<br />BMS & Building Automation<br />Industrial Automation<br />Electronic Security<br />Fire & Life Safety<br />Automatic Door Systems<br />Lead & Lag Controllers<br />LoRa Telemetry Networks<br />Systems Integration</p></div><div><h3 className="font-bold mb-4">Contact</h3><p className="text-sm text-muted-text leading-7">Hogerty Hill, Harare, Zimbabwe<br /><a href="mailto:info@admill.co.zw">info@admill.co.zw</a><br /><a href="tel:+263715017744">+263 715 017 744</a></p></div></div>
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 grid md:grid-cols-3 gap-8"><div><NextImage src="/logo-02.png" alt="Admill Systems" width={58} height={48} className="h-10 w-auto mb-4" /><p className="text-sm text-muted-text max-w-sm">Electrical, electronic and building systems engineering and integration for commercial, industrial and institutional facilities.</p></div><div><h3 className="font-bold mb-4">Solutions</h3><p className="text-sm text-muted-text leading-7">{solutions.map((solution, index) => (<React.Fragment key={solution.href}>{index > 0 && <br />}<Link href={solution.href} className="hover:text-accent-red">{solution.title}</Link></React.Fragment>))}</p></div><div><h3 className="font-bold mb-4">Contact</h3><p className="text-sm text-muted-text leading-7">Hogerty Hill, Harare, Zimbabwe<br /><a href="mailto:info@admill.co.zw">info@admill.co.zw</a><br /><a href="tel:+263715017744">+263 715 017 744</a></p></div></div>
         <div className="max-w-7xl mx-auto px-6 lg:px-8 mt-10 pt-6 border-t border-border-light text-xs text-muted-text">© {new Date().getFullYear()} Admill Systems. All rights reserved.</div>
       </footer>
     </div>
