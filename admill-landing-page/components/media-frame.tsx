@@ -1,15 +1,35 @@
-// components/media-frame.js
+// components/media-frame.tsx
 // Unified media slot: renders next/image when a real photo is provided,
 // otherwise a branded navy/gold blueprint placeholder (no external tooling needed).
 // Swap a placeholder for a photo by setting `src` — nothing else changes.
 import NextImage from "next/image";
+import type { CSSProperties, ReactNode } from "react";
 
-const RATIOS = {
+type Ratio = "16/9" | "2/1" | "4/3" | "3/2" | "1/1";
+type Tone = "dark" | "light";
+
+const RATIOS: Record<Ratio, string> = {
   "16/9": "16 / 9",
   "2/1": "2 / 1",
   "4/3": "4 / 3",
   "3/2": "3 / 2",
   "1/1": "1 / 1",
+};
+
+export type MediaProps = {
+  src?: string;
+  alt?: string;
+  label?: string;
+  hint?: string;
+  /** Aspect-ratio lock. Pass `null` for fill mode (used for header backgrounds). */
+  ratio?: Ratio | null;
+  tone?: Tone;
+  priority?: boolean;
+  sizes?: string;
+  rounded?: boolean;
+  className?: string;
+  imgClassName?: string;
+  children?: ReactNode;
 };
 
 export default function Media({
@@ -25,12 +45,14 @@ export default function Media({
   className = "",
   imgClassName = "object-cover",
   children,
-}) {
-  const aspectRatio = ratio ? RATIOS[ratio] ?? RATIOS["4/3"] : undefined;
+}: MediaProps) {
+  const aspectRatio = ratio ? RATIOS[ratio] : undefined;
+  const style: CSSProperties | undefined = aspectRatio ? { aspectRatio } : undefined;
+
   return (
     <div
       className={`relative overflow-hidden bg-secondary-bg ${rounded ? "rounded-xl" : ""} ${className}`}
-      style={aspectRatio ? { aspectRatio } : undefined}
+      style={style}
     >
       {src ? (
         <NextImage
@@ -51,7 +73,15 @@ export default function Media({
 
 // Blueprint-style placeholder. Pure flat SVG (no defs/ids) so multiple
 // instances can coexist without duplicate DOM ids.
-function MediaPlaceholder({ label, hint, tone }) {
+function MediaPlaceholder({
+  label,
+  hint,
+  tone,
+}: {
+  label?: string;
+  hint?: string;
+  tone?: Tone;
+}) {
   const dark = tone !== "light";
   const bg = dark ? "#0A1730" : "#F4F6F9";
   const line = dark ? "#22345A" : "#E0E0E0";
