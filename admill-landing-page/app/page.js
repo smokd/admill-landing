@@ -166,26 +166,26 @@ export default function HomePage() {
   return (
     <div className="bg-primary-bg text-primary-text">
       <main id="top">
-        <section className="relative min-h-[760px] pt-20 flex items-center overflow-hidden">
+        <section className="relative min-h-[760px] pt-20 flex items-center overflow-hidden bg-[#0A1730]">
           <div className="absolute inset-0">
             <NextImage src="/eng.jpg" alt="" fill priority fetchPriority="high" sizes="100vw" className="object-cover" aria-hidden="true" />
-            <div className="absolute inset-0 bg-white/85 md:bg-white/78" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0A1730]/95 via-[#0A1730]/85 to-[#0A1730]/65" />
           </div>
-          <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-24 w-full">
+          <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-24 w-full text-white">
             <div className="max-w-4xl">
-              <p className="text-accent-red font-bold uppercase tracking-[0.22em] text-sm mb-6">Electrical • Automation • Building Systems • Integration</p>
+              <p className="text-red-400 font-bold uppercase tracking-[0.22em] text-sm mb-6">Electrical • Automation • Building Systems • Integration</p>
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.02] tracking-tight mb-7">
-                Engineering the systems behind <span className="text-accent-red">resilient, intelligent facilities.</span>
+                Engineering the systems behind <span className="text-red-400">resilient, intelligent facilities.</span>
               </h1>
-              <p className="text-xl lg:text-2xl text-muted-text max-w-3xl leading-relaxed mb-9">
+              <p className="text-xl lg:text-2xl text-white/75 max-w-3xl leading-relaxed mb-9">
                 Admill Systems designs, integrates and commissions electrical, energy, building automation, industrial control and electronic security systems for commercial, industrial and institutional facilities in Zimbabwe.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 mb-10">
                 <a href="#contact" className="inline-flex justify-center items-center gap-2 bg-accent-red text-white px-8 py-4 rounded-full font-bold text-lg hover:opacity-90">Discuss a Project <FiArrowRight /></a>
-                <a href="#projects" className="inline-flex justify-center items-center gap-2 border border-primary-text px-8 py-4 rounded-full font-bold text-lg hover:bg-primary-text hover:text-white">View Our Work</a>
+                <a href="#projects" className="inline-flex justify-center items-center gap-2 border border-white/40 px-8 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-[#0A1730]">View Our Work</a>
               </div>
-              <div className="flex flex-wrap gap-x-7 gap-y-3 text-sm font-semibold">
-                {['Design & Engineering', 'Systems Integration', 'Testing & Commissioning', 'Lifecycle Support'].map(item => <span key={item} className="flex items-center gap-2"><FiCheck className="text-accent-red" />{item}</span>)}
+              <div className="flex flex-wrap gap-x-7 gap-y-3 text-sm font-semibold text-white/80">
+                {['Design & Engineering', 'Systems Integration', 'Testing & Commissioning', 'Lifecycle Support'].map(item => <span key={item} className="flex items-center gap-2"><FiCheck className="text-red-400" />{item}</span>)}
               </div>
             </div>
           </div>
@@ -202,19 +202,33 @@ export default function HomePage() {
         <section id="solutions" className="py-24">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="max-w-3xl mb-14"><p className="text-accent-red font-bold uppercase tracking-widest text-sm mb-3">Core capabilities</p><h2 className="text-4xl lg:text-5xl font-bold mb-5">Engineering solutions built around the facility.</h2><p className="text-lg text-muted-text">We combine electrical, electronic and control disciplines to deliver infrastructure that is designed to work as a system.</p></div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-border-light border border-border-light">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-border-light border border-border-light">
               {solutions.map((solution) => (
-                <Link key={solution.title} href={solution.href} className="bg-primary-bg p-8 lg:p-9 hover:bg-secondary-bg transition-colors">
-                  <div className="flex items-center gap-4 mb-7">
-                    <NextImage src={solutionIcons[solution.title]} alt="" width={40} height={40} className="w-10 h-10" />
-                    <div className="w-10 h-1 bg-accent-red" />
+                <Link key={solution.title} href={solution.href} className="bg-primary-bg p-7 hover:bg-secondary-bg transition-colors">
+                  <div className="flex items-center gap-4 mb-6">
+                    <NextImage src={solutionIcons[solution.title]} alt="" width={36} height={36} className="w-9 h-9" />
+                    <div className="w-8 h-1 bg-accent-red" />
                   </div>
-                  <h3 className="text-2xl font-bold mb-4">{solution.title}</h3>
+                  <h3 className="text-xl font-bold mb-3">{solution.title}</h3>
                   <p className="text-muted-text leading-relaxed mb-7">{solution.text}</p>
                   <div className="flex flex-wrap gap-2">{solution.tags.map(tag => <span key={tag} className="text-xs font-semibold border border-border-light px-3 py-1.5 rounded-full">{tag}</span>)}</div>
                   <span className="mt-6 inline-block font-semibold text-accent-red">Explore capability →</span>
                 </Link>
               ))}
+            </div>
+            <div className="mt-10 text-center"><Link href="/solutions" className="inline-flex items-center gap-2 font-semibold text-accent-red hover:opacity-80">See all engineering solutions <FiArrowRight /></Link></div>
+          </div>
+        </section>
+
+        <section className="bg-secondary-bg py-24">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="max-w-3xl mb-14"><p className="text-accent-red font-bold uppercase tracking-widest text-sm mb-3">In the field</p><h2 className="text-4xl lg:text-5xl font-bold mb-5">Engineered installations, documented.</h2><p className="text-lg text-muted-text">Representative photographs from electrical, energy and control projects across commercial and industrial facilities.</p></div>
+            <div className="grid md:grid-cols-3 gap-7">
+              {[
+                ["Switchgear and distribution", "electrical-switchroom.jpg"],
+                ["Solar and battery storage", "solar-storage.jpg"],
+                ["Control rooms and BMS", "bms-control-room.jpg"]
+              ].map(([label, hint]) => <figure key={hint}><Media label={label} hint={hint} ratio="4/3" tone="dark" /><figcaption className="mt-4 text-sm font-semibold">{label}</figcaption></figure>)}
             </div>
           </div>
         </section>
@@ -222,8 +236,8 @@ export default function HomePage() {
         <section id="industries" className="bg-primary-text text-white py-24">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="max-w-3xl mb-14"><p className="text-accent-red font-bold uppercase tracking-widest text-sm mb-3">Industries</p><h2 className="text-4xl lg:text-5xl font-bold mb-5">Built for environments where reliability matters.</h2><p className="text-white/65 text-lg">Our approach adapts to the operational, safety and continuity requirements of each facility.</p></div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-              {industries.map(([title, text, href]) => <Link href={href} key={title} className="border-t border-white/20 pt-6 hover:text-red-300"><h3 className="text-xl font-bold mb-3">{title}</h3><p className="text-white/60 leading-relaxed">{text}</p><span className="mt-4 inline-block text-sm font-semibold">View sector capability →</span></Link>)}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {industries.map(([title, text, href]) => <Link href={href} key={title} className="group"><Media label={title} hint={`${href.split("/").pop()}.jpg`} ratio="3/2" tone="dark" imgClassName="object-cover transition-transform duration-500 group-hover:scale-105" /><h3 className="mt-5 text-xl font-bold group-hover:text-red-300">{title}</h3><p className="mt-3 text-white/60 leading-relaxed">{text}</p><span className="mt-4 inline-block text-sm font-semibold">View sector capability →</span></Link>)}
             </div>
           </div>
         </section>
@@ -242,13 +256,13 @@ export default function HomePage() {
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14"><div><p className="text-accent-red font-bold uppercase tracking-widest text-sm mb-3">Project evidence</p><h2 className="text-4xl lg:text-5xl font-bold">Real facilities. Real systems. Real results.</h2></div><p className="max-w-xl text-muted-text leading-relaxed">Explore highlighted projects where Admill designed, integrated and commissioned the critical infrastructure.</p></div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
               {[
-                ["Harare Hippodrome", "Electrical and CCTV works delivered for one of Harare's most storied venues — keeping the lights on and the grounds watched.", "/hh.png"],
-                ["Custom BMS Solution", "Bespoke building management controls for a religious institution in Harare, tailored to its unique spaces and schedules.", "/lds.jpg"],
-                ["Commercial Facilities", "Integrated security, networking and building systems for multi-building environments.", "/turn.png"],
-                ["Institutional Infrastructure", "Campus infrastructure combining connectivity, security and operational systems.", "/board.webp"],
-                ["Systems Integration", "Connecting independent systems into a coordinated operational environment.", "/mtgs.jpg"],
-                ["BYD Harare", "Electrical installation and structured networking powering BYD's Harare showroom and service facility.", "/byd-600x338.webp"]
-              ].map(([title, text, image]) => <article key={title} className="border border-border-light overflow-hidden bg-primary-bg"><Media src={image} alt={title} ratio="16/9" sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw" /><div className="p-7"><p className="text-accent-red text-xs uppercase font-bold tracking-widest mb-3">Featured project</p><h3 className="text-2xl font-bold mb-3">{title}</h3><p className="text-muted-text leading-relaxed">{text}</p></div></article>)}
+                ["Harare Hippodrome", "Electrical and CCTV works delivered for one of Harare's most storied venues — keeping the lights on and the grounds watched.", "/hh.png", "Electrical · CCTV"],
+                ["Custom BMS Solution", "Bespoke building management controls for a religious institution in Harare, tailored to its unique spaces and schedules.", "/lds.jpg", "Building Automation"],
+                ["Commercial Facilities", "Integrated security, networking and building systems for multi-building environments.", "/turn.png", "Security · Networking"],
+                ["Institutional Infrastructure", "Campus infrastructure combining connectivity, security and operational systems.", "/board.webp", "Connectivity · Security"],
+                ["Systems Integration", "Connecting independent systems into a coordinated operational environment.", "/mtgs.jpg", "Integration"],
+                ["BYD Harare", "Electrical installation and structured networking powering BYD's Harare showroom and service facility.", "/byd-600x338.webp", "Electrical · Networking"]
+              ].map(([title, text, image, tag]) => <article key={title} className="group border border-border-light overflow-hidden bg-primary-bg transition-colors hover:border-accent-red"><Media src={image} alt={title} ratio="16/9" sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw" imgClassName="object-cover transition-transform duration-500 group-hover:scale-105" /><div className="p-7"><div className="flex items-center gap-3 mb-3"><p className="text-accent-red text-xs uppercase font-bold tracking-widest">Featured project</p><span className="text-xs font-semibold border border-border-light px-3 py-1 rounded-full">{tag}</span></div><h3 className="text-2xl font-bold mb-3">{title}</h3><p className="text-muted-text leading-relaxed">{text}</p></div></article>)}
             </div>
           </div>
         </section>

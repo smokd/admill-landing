@@ -118,14 +118,15 @@ Two tracks, because the photo pipeline is not ready yet:
   "IMAGE PENDING" mark). Flat SVG with no `defs`/ids, so many can coexist.
 - **T7** ✅ Wired into the projects grid; swap to a photo is a one-line `src` change.
 
-### Phase 2 — Homepage revamp
-- **T8** Rework hero: dark full-bleed media, reduced overlay, refined type scale, two CTAs.
-- **T9** Rebuild capabilities section: balanced grid (e.g. 8 cards, 4×2) + a
-  "See all solutions →" link to `/solutions`.
-- **T10** New "Capabilities in the field" photo band (3–4 `Media` slots).
-- **T11** Convert industries to image cards (`Media`).
-- **T12** Upgrade projects to case-study cards: larger image, tag chips, hover state.
-- **T13** Add stats/trust strip (honest figures only).
+### Phase 2 — Homepage revamp (T8–T12 DONE, T13 pending data)
+- **T8** ✅ Hero reworked: dark navy gradient over the image, white type, red primary CTA,
+  white-outline secondary, lightened red accents for contrast.
+- **T9** ✅ Capabilities grid → 4 columns (all 10 kept); card padding/type tuned; "See all
+  engineering solutions →" link added.
+- **T10** ✅ New "In the field" photo band (3 `Media` slots).
+- **T11** ✅ Industries converted to image cards (`Media`, hover zoom).
+- **T12** ✅ Projects upgraded to case-study cards: tag chip, hover border + image zoom.
+- **T13** ⏳ Stats/trust strip — needs real figures from the client (not fabricated).
 
 ### Phase 3 — Inner pages
 - **T14** Apply `Media` + placeholder to solution and industry page headers.
